@@ -30,3 +30,16 @@
 
 # Debug files
 *.dSYM/
+
+# OS files
+[Tt]humbs.db
+*.DS_Store
+*.lnk
+
+# Backup files
+*~
+*.bak
+
+# Temporary files
+*.tmp
+*.temp
