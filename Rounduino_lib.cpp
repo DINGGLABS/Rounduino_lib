@@ -39,8 +39,8 @@ static volatile unsigned int timerInterruptCounterPiezo = 0;
 struct symbol *head = NULL;
 struct symbol *tail = NULL;
 
-/* buffer */
-byte buffer[BUFFER_SIZE][BUFFER_WIDTH / NUMBER_OF_PIXELS_PER_BYTE] = {0};
+/* customSymbol */
+byte customSymbol[CUSTOM_SYMBOL_SIZE][CUSTOM_SYMBOL_WIDTH / NUMBER_OF_PIXELS_PER_BYTE] = {0};
 
 /* time */
 struct rtc Time;
@@ -391,7 +391,7 @@ static void initTimerInterrupt_CTC_3()
 
 /* functions to generate symbols ------------------------------ */
 /** ===========================================================
- * \fn      setCircle
+ * \fn      setCircleSymbol
  * \brief   generates a circle symbol
  *
  * \requ    addSymbolTail()
@@ -400,7 +400,7 @@ static void initTimerInterrupt_CTC_3()
  *          (byte) brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setCircle(byte x, byte y, byte b)
+void setCircleSymbol(byte x, byte y, byte b)
 {
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
@@ -421,7 +421,7 @@ void setCircle(byte x, byte y, byte b)
 }
 
 /** ===========================================================
- * \fn      setTriangle
+ * \fn      setTriangleSymbol
  * \brief   generates a triangle symbol
  *
  * \requ    addSymbolTail()
@@ -430,7 +430,7 @@ void setCircle(byte x, byte y, byte b)
  *          (byte) brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setTriangle(byte x, byte y, byte b)
+void setTriangleSymbol(byte x, byte y, byte b)
 {
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
@@ -451,7 +451,7 @@ void setTriangle(byte x, byte y, byte b)
 }
 
 /** ===========================================================
- * \fn      setSquare
+ * \fn      setSquareSymbol
  * \brief   generates a square symbol
  *
  * \requ    addSymbolTail()
@@ -460,7 +460,7 @@ void setTriangle(byte x, byte y, byte b)
  *          (byte) brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setSquare(byte x, byte y, byte b)
+void setSquareSymbol(byte x, byte y, byte b)
 {
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
@@ -481,7 +481,7 @@ void setSquare(byte x, byte y, byte b)
 }
 
 /** ===========================================================
- * \fn      setLArrow
+ * \fn      setLArrowSymbol
  * \brief   generates a left arrow symbol
  *
  * \requ    addSymbolTail()
@@ -490,7 +490,7 @@ void setSquare(byte x, byte y, byte b)
  *          (byte) brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setLArrow(byte x, byte y, byte b)
+void setLArrowSymbol(byte x, byte y, byte b)
 {
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
@@ -511,7 +511,7 @@ void setLArrow(byte x, byte y, byte b)
 }
 
 /** ===========================================================
- * \fn      setRArrow
+ * \fn      setRArrowSymbol
  * \brief   generates a right arrow symbol
  *
  * \requ    addSymbolTail()
@@ -520,7 +520,7 @@ void setLArrow(byte x, byte y, byte b)
  *          (byte) brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setRArrow(byte x, byte y, byte b)
+void setRArrowSymbol(byte x, byte y, byte b)
 {
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
@@ -541,7 +541,7 @@ void setRArrow(byte x, byte y, byte b)
 }
 
 /** ===========================================================
- * \fn      setBigNumber
+ * \fn      setBigNumberSymbol
  * \brief   generates a big number symbol
  *
  * \requ    addSymbolTail()
@@ -551,7 +551,7 @@ void setRArrow(byte x, byte y, byte b)
  *          (byte) brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setBigNumber(char c, byte x, byte y, byte b)
+void setBigNumberSymbol(char c, byte x, byte y, byte b)
 {
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
@@ -575,7 +575,7 @@ void setBigNumber(char c, byte x, byte y, byte b)
  * \brief   draws a string of big numbers on given position on
  *          the display
  *
- * \requ    setBigNumber(), drawSymbols()
+ * \requ    setBigNumberSymbol(), drawSymbols()
  *
  * \param   (char[]) constant string (char array)
  *          (byte)   x, y top left coordinate of the string
@@ -607,14 +607,14 @@ void drawBigNumbers(const char str[], byte x, byte y, byte b)
     {
       
     }
-    setBigNumber((byte)str[i], currentX, y, b);
+    setBigNumberSymbol((byte)str[i], currentX, y, b);
   }
 
   drawSymbols();
 }
 
 /** ===========================================================
- * \fn      setChar
+ * \fn      setCharSymbol
  * \brief   generates a char symbol
  *
  * \requ    addSymbolTail()
@@ -624,7 +624,7 @@ void drawBigNumbers(const char str[], byte x, byte y, byte b)
  *          (byte) brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setChar(char c, byte x, byte y, byte b)
+void setCharSymbol(char c, byte x, byte y, byte b)
 {
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
@@ -647,7 +647,7 @@ void setChar(char c, byte x, byte y, byte b)
  * \fn      drawString
  * \brief   draws a string on given position on the display
  *
- * \requ    setChar(), drawSymbols()
+ * \requ    setCharSymbol(), drawSymbols()
  *
  * \param   (char[]) constant string (char array)
  *          (byte)   x, y top left coordinate of the string
@@ -679,42 +679,42 @@ void drawString(const char str[], byte x, byte y, byte b)
     {
       
     }
-    setChar((byte)str[i], currentX, y, b);
+    setCharSymbol((byte)str[i], currentX, y, b);
   }
 
   drawSymbols();
 }
 
 /** ===========================================================
- * \fn      setBuffer
- * \brief   generates a buffer symbol or overwrites existing
+ * \fn      setCustomSymbol
+ * \brief   generates a customSymbol or overwrites existing
  *
  * \requ    addSymbolTail(), replaceSymbol()
  *
- * \param   (byte) x, y top left coordinate of the buffer
+ * \param   (byte) x, y top left coordinate of the customSymbol
  *          (byte) brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setBuffer(byte x, byte y, byte b)
+void setCustomSymbol(byte x, byte y, byte b)
 {    
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
   byte temp = x;
-  x = NUMBER_OF_PIXELS_PER_COLUMN - y - BUFFER_SIZE;
+  x = NUMBER_OF_PIXELS_PER_COLUMN - y - CUSTOM_SYMBOL_SIZE;
   y = temp;
   #endif
   
   #ifdef ROTATED_ACW
   byte temp = y;
-  y = NUMBER_OF_PIXELS_PER_ROW - x - BUFFER_WIDTH;
+  y = NUMBER_OF_PIXELS_PER_ROW - x - CUSTOM_SYMBOL_WIDTH;
   x = temp;
   #endif
   
-  /* define a buffer symbol */
-  struct symbol s = {(byte)(getNumberOfSymbols() + 1), false, BUFFER_NAME_OFFSET, x, y, BUFFER_WIDTH, BUFFER_SIZE, b, NULL, NULL};
+  /* define a customSymbol */
+  struct symbol s = {(byte)(getNumberOfSymbols() + 1), false, CUSTOM_SYMBOL_NAME_OFFSET, x, y, CUSTOM_SYMBOL_WIDTH, CUSTOM_SYMBOL_SIZE, b, NULL, NULL};
   
   /* check existing */
-  struct symbol *ptr = getBufferSymbol();
+  struct symbol *ptr = getCustomSymbol();
   
   if (ptr != NULL) replaceSymbol(ptr, &s);
   else addSymbolTail(&s);
@@ -744,7 +744,7 @@ static struct symbol *addSymbol(struct symbol *s)
   else
   {
     #ifdef DEBUGGING
-    Serial.println("Buffer's full! Couldn't add the new symbol");
+    Serial.println("CustomSymbol's full! Couldn't add the new symbol");
     #endif
 
     return NULL;
@@ -1324,20 +1324,20 @@ static byte getListPosOfFirstEmptySymbol()
 // }
 
 /** ===========================================================
- * \fn      getBufferSymbol
- * \brief   returns a pointer on the buffer symbol in the
- *          symbol list or NULL if there is no buffer
+ * \fn      getCustomSymbol
+ * \brief   returns a pointer on the customSymbol in the
+ *          symbol list or NULL if there is no customSymbol
  *
  * \param   -
- * \return  (*symbol) symbol pointer on buffer or NULL
+ * \return  (*symbol) symbol pointer on customSymbol or NULL
  ============================================================== */
-struct symbol *getBufferSymbol()
+struct symbol *getCustomSymbol()
 {
   struct symbol *res = NULL;
   
   for (struct symbol *ptr = head; ptr != NULL; ptr = ptr -> next)
   {
-    if ((ptr -> c) == BUFFER_NAME_OFFSET)
+    if ((ptr -> c) == CUSTOM_SYMBOL_NAME_OFFSET)
     {
       res = ptr;
       break;
@@ -1508,141 +1508,141 @@ void setSymbolBrightnesses(byte b)
   }
 }
 
-/* functions to handle the buffer */
+/* functions to handle the customSymbol */
 /** ===========================================================
- * \fn      fillBuffer
- * \brief   fills the whole buffer content
+ * \fn      fillCustomSymbol
+ * \brief   fills the whole customSymbol content
  *
  * \param   -
  * \return  -
  ============================================================== */
-void fillBuffer()
+void fillCustomSymbol()
 {  
-  for (int y = 0 ; y < BUFFER_SIZE; y++)
+  for (int y = 0 ; y < CUSTOM_SYMBOL_SIZE; y++)
   {
-    for (int x = 0 ; x < BUFFER_WIDTH / NUMBER_OF_PIXELS_PER_BYTE; x++)
+    for (int x = 0 ; x < CUSTOM_SYMBOL_WIDTH / NUMBER_OF_PIXELS_PER_BYTE; x++)
     { 
-      buffer[y][x] = 0xFF;
+      customSymbol[y][x] = 0xFF;
     }
   }
 }
 
 /** ===========================================================
- * \fn      clearBuffer
- * \brief   clears the whole buffer content
+ * \fn      clearCustomSymbol
+ * \brief   clears the whole customSymbol content
  *
  * \param   -
  * \return  -
  ============================================================== */
-void clearBuffer()
+void clearCustomSymbol()
 {  
-  for (int y = 0 ; y < BUFFER_SIZE; y++)
+  for (int y = 0 ; y < CUSTOM_SYMBOL_SIZE; y++)
   {
-    for (int x = 0 ; x < BUFFER_WIDTH / NUMBER_OF_PIXELS_PER_BYTE; x++)
+    for (int x = 0 ; x < CUSTOM_SYMBOL_WIDTH / NUMBER_OF_PIXELS_PER_BYTE; x++)
     { 
-      buffer[y][x] = 0;
+      customSymbol[y][x] = 0;
     }
   }
 }
 
 /** ===========================================================
  * \fn      setPixel
- * \brief   sets a single monochrome pixel in the buffer
+ * \brief   sets a single monochrome pixel in the customSymbol
  *
- * \param   (byte) x coordinate of the pixel within the buffer
- *                 (0... BUFFER_WIDTH - 1)
- *          (byte) y coordinate of the pixel within the buffer
- *                 (0... BUFFER_SIZE - 1)
+ * \param   (byte) x coordinate of the pixel within the customSymbol
+ *                 (0... CUSTOM_SYMBOL_WIDTH - 1)
+ *          (byte) y coordinate of the pixel within the customSymbol
+ *                 (0... CUSTOM_SYMBOL_SIZE - 1)
  * \return  -
  ============================================================== */
 void setPixel(byte x, byte y)
 {
   /* limit input paramters */
-  if (x >= BUFFER_WIDTH) x = BUFFER_WIDTH - 1;
-  if (y >= BUFFER_SIZE) y = BUFFER_SIZE - 1;
+  if (x >= CUSTOM_SYMBOL_WIDTH) x = CUSTOM_SYMBOL_WIDTH - 1;
+  if (y >= CUSTOM_SYMBOL_SIZE) y = CUSTOM_SYMBOL_SIZE - 1;
   
   /* recalculate position if rotated */
   #ifdef ROTATED_CW
   byte temp = x;
-  x = BUFFER_SIZE - 1 - y;
+  x = CUSTOM_SYMBOL_SIZE - 1 - y;
   y = temp;
   #endif
   
   #ifdef ROTATED_ACW
   byte temp = y;
-  y = BUFFER_WIDTH - 1 - x;
+  y = CUSTOM_SYMBOL_WIDTH - 1 - x;
   x = temp;
   #endif
 
   /* calculate number of required shifts on base of pixel location and number of pixels per byte */
   byte numberOfRequiredShifts = 8 - NUMBER_OF_BITS_PER_PIXEL * ((x % NUMBER_OF_PIXELS_PER_BYTE) + 1);  // 8 - 1*((0,1,2,3,4,5,6,7)+1)
 
-  /* set bit of matching buffer byte by shifting */
-  buffer[y][x / NUMBER_OF_PIXELS_PER_BYTE] |= (1 << numberOfRequiredShifts);
+  /* set bit of matching customSymbol byte by shifting */
+  customSymbol[y][x / NUMBER_OF_PIXELS_PER_BYTE] |= (1 << numberOfRequiredShifts);
 }
 
 /** ===========================================================
  * \fn      clearPixel
- * \brief   resets a single monochrome pixel in the buffer
+ * \brief   resets a single monochrome pixel in the customSymbol
  *
- * \param   (byte) x coordinate of the pixel within the buffer
- *                 (0... BUFFER_WIDTH - 1)
- *          (byte) y coordinate of the pixel within the buffer
- *                 (0... BUFFER_SIZE - 1)
+ * \param   (byte) x coordinate of the pixel within the customSymbol
+ *                 (0... CUSTOM_SYMBOL_WIDTH - 1)
+ *          (byte) y coordinate of the pixel within the customSymbol
+ *                 (0... CUSTOM_SYMBOL_SIZE - 1)
  * \return  -
  ============================================================== */
 void clearPixel(byte x, byte y)
 {
   /* limit input paramters */
-  if (x >= BUFFER_WIDTH) x = BUFFER_WIDTH - 1;
-  if (y >= BUFFER_SIZE) y = BUFFER_SIZE - 1;
+  if (x >= CUSTOM_SYMBOL_WIDTH) x = CUSTOM_SYMBOL_WIDTH - 1;
+  if (y >= CUSTOM_SYMBOL_SIZE) y = CUSTOM_SYMBOL_SIZE - 1;
   
   /* recalculate position if rotated */
   #ifdef ROTATED_CW
   byte temp = x;
-  x = BUFFER_SIZE - 1 - y;
+  x = CUSTOM_SYMBOL_SIZE - 1 - y;
   y = temp;
   #endif
   
   #ifdef ROTATED_ACW
   byte temp = y;
-  y = BUFFER_WIDTH - 1 - x;
+  y = CUSTOM_SYMBOL_WIDTH - 1 - x;
   x = temp;
   #endif
   
   /* calculate number of required shifts on base of pixel location and number of pixels per byte */
   byte numberOfRequiredShifts = 8 - NUMBER_OF_BITS_PER_PIXEL * ((x % NUMBER_OF_PIXELS_PER_BYTE) + 1);  // 8 - 1*((0,1,2,3,4,5,6,7)+1)
 
-  /* set bit of matching buffer byte by shifting */
-  buffer[y][x / NUMBER_OF_PIXELS_PER_BYTE] &= ~(1 << numberOfRequiredShifts);
+  /* set bit of matching customSymbol byte by shifting */
+  customSymbol[y][x / NUMBER_OF_PIXELS_PER_BYTE] &= ~(1 << numberOfRequiredShifts);
 }
 
 /** ===========================================================
  * \fn      getPixel
- * \brief   gets the state of a single pixel from the buffer
+ * \brief   gets the state of a single pixel from the customSymbol
  *
  * \param   (byte) x coordinate of the pixel
- *                 (0... BUFFER_WIDTH - 1)
+ *                 (0... CUSTOM_SYMBOL_WIDTH - 1)
  *          (byte) y coordinate of the pixel
- *                 (0... BUFFER_SIZE - 1) 
+ *                 (0... CUSTOM_SYMBOL_SIZE - 1) 
  * \return  (bool) true = 1 (set), false = 0 (reset)
  ============================================================== */
 boolean getPixel(byte x, byte y)
 {
   /* limit input paramters */
-  if (x >= BUFFER_WIDTH) x = BUFFER_WIDTH - 1;
-  if (y >= BUFFER_SIZE) y = BUFFER_SIZE - 1;
+  if (x >= CUSTOM_SYMBOL_WIDTH) x = CUSTOM_SYMBOL_WIDTH - 1;
+  if (y >= CUSTOM_SYMBOL_SIZE) y = CUSTOM_SYMBOL_SIZE - 1;
   
   /* recalculate position if rotated */
   #ifdef ROTATED_CW
   byte temp = x;
-  x = BUFFER_SIZE - 1 - y;
+  x = CUSTOM_SYMBOL_SIZE - 1 - y;
   y = temp;
   #endif
   
   #ifdef ROTATED_ACW
   byte temp = y;
-  y = BUFFER_WIDTH - 1 - x;
+  y = CUSTOM_SYMBOL_WIDTH - 1 - x;
   x = temp;
   #endif
 
@@ -1651,35 +1651,35 @@ boolean getPixel(byte x, byte y)
   /* define number of required shifts on base of pixel location */
   byte numberOfRequiredShifts = 8 - NUMBER_OF_BITS_PER_PIXEL * ((x % NUMBER_OF_PIXELS_PER_BYTE) + 1);  // 8 - 1*((0,1,2,3,4,5,6,7)+1)
 
-  /* get pixel brightness of matching buffer byte */
-  b |= buffer[y][x / NUMBER_OF_PIXELS_PER_BYTE] >> numberOfRequiredShifts;
+  /* get pixel brightness of matching customSymbol byte */
+  b |= customSymbol[y][x / NUMBER_OF_PIXELS_PER_BYTE] >> numberOfRequiredShifts;
   b &= 0xFF >> (8 - NUMBER_OF_BITS_PER_PIXEL);  // mask the brightness value
 
   return b;
 }
 
 /** ===========================================================
- * \fn      rotateBufferContentCW
- * \brief   rotates the buffer content by 90° clockwise
- *          (buffer have to be symmetrical!)
+ * \fn      rotateCustomSymbolContentCW
+ * \brief   rotates the customSymbol content by 90° clockwise
+ *          (customSymbol have to be symmetrical!)
  *          (f(x, y) = (max-y, x))
  *
  * \param   -
  * \return  -
  ============================================================== */
-void rotateBufferContentCW()
+void rotateCustomSymbolContentCW()
 {
   #ifdef DEBUGGING
-  Serial.println("rotate buffer content CW");
+  Serial.println("rotate customSymbol content CW");
   #endif
 
   boolean pixelA, pixelB;
   byte currentX, currentY, newX, newY;
-  const byte maxXY = (BUFFER_SIZE - 1);
+  const byte maxXY = (CUSTOM_SYMBOL_SIZE - 1);
 
-  for (int y = 0 ; y < BUFFER_SIZE / 2; y++)
+  for (int y = 0 ; y < CUSTOM_SYMBOL_SIZE / 2; y++)
   {
-    for (int x = 0 ; x < BUFFER_WIDTH / 2; x++)
+    for (int x = 0 ; x < CUSTOM_SYMBOL_WIDTH / 2; x++)
     { 
       pixelA = getPixel(x, y);
 
@@ -1721,27 +1721,27 @@ void rotateBufferContentCW()
 }
 
 /** ===========================================================
- * \fn      rotateBufferContentACW
- * \brief   rotates the buffer content by 90° against clockwise
- *          (buffer have to be symmetrical!)
+ * \fn      rotateCustomSymbolContentACW
+ * \brief   rotates the customSymbol content by 90° against clockwise
+ *          (customSymbol have to be symmetrical!)
  *          (f(x, y) = (y, max-x))
  *
  * \param   -
  * \return  -
  ============================================================== */
-void rotateBufferContentACW()
+void rotateCustomSymbolContentACW()
 {
   #ifdef DEBUGGING
-  Serial.println("rotate buffer content ACW");
+  Serial.println("rotate customSymbol content ACW");
   #endif
 
   boolean pixelA, pixelB;
   byte currentX, currentY, newX, newY;
-  const byte maxXY = (BUFFER_SIZE - 1);
+  const byte maxXY = (CUSTOM_SYMBOL_SIZE - 1);
 
-  for (int y = 0 ; y < BUFFER_SIZE / 2; y++)
+  for (int y = 0 ; y < CUSTOM_SYMBOL_SIZE / 2; y++)
   {
-    for (int x = 0 ; x < BUFFER_WIDTH / 2; x++)
+    for (int x = 0 ; x < CUSTOM_SYMBOL_WIDTH / 2; x++)
     { 
       pixelA = getPixel(x, y);
 
@@ -1784,7 +1784,7 @@ void rotateBufferContentACW()
 
 /** ===========================================================
  * \fn      drawLine
- * \brief   writes a line on given coordinates into the buffer
+ * \brief   writes a line on given coordinates into the customSymbol
  *          (uses the Bresenham's line-drawing algorithm)
  *
  * \param   (int) x0, y0 start coordinate of the line
@@ -1855,7 +1855,7 @@ static int sgn(int a)
 /** ===========================================================
  * \fn      drawHLine
  * \brief   writes a horizontal line on given coordinate into
- *          the buffer
+ *          the customSymbol
  *
  * \requ    drawLine()
  *
@@ -1871,7 +1871,7 @@ void drawHLine(byte x, byte y, byte l)
 /** ===========================================================
  * \fn      drawVLine
  * \brief   writes a vertical line on given coordinate into the
- *          buffer
+ *          customSymbol
  *
  * \requ    drawLine()
  *
@@ -1887,9 +1887,9 @@ void drawVLine(byte x, byte y, byte h)
 /** ===========================================================
  * \fn      drawRectangle
  * \brief   draws a rectangle on given coordinate into the
- *          buffer
+ *          customSymbol
  *
- * \requ    drawHLine(), drawVLine(), drawBufferSymbol()
+ * \requ    drawHLine(), drawVLine(), drawCustomSymbol()
  *
  * \param   (byte) x, y top left coordinate of the rectangle
  *          (byte) length of the rectangle
@@ -1903,15 +1903,15 @@ void drawRectangle(byte x, byte y, byte l, byte h)
   drawHLine(x, y + h - 1, l);
   drawVLine(x + l - 1, y, h);
   
-  drawBufferSymbol();
+  drawCustomSymbol();
 }
 
 /** ===========================================================
  * \fn      drawFilledRectangle
  * \brief   draws a filled rectangle on given coordinates into
- *          the buffer
+ *          the customSymbol
  *
- * \requ    drawHLine(), drawBufferSymbol();
+ * \requ    drawHLine(), drawCustomSymbol();
  *
  * \param   (byte) x, y top left coordinate of the rectangle
  *          (byte) length of the rectangle
@@ -1925,21 +1925,21 @@ void drawFilledRectangle(byte x, byte y, byte l, byte h)
     drawHLine(x, i, l);
   }
   
-  drawBufferSymbol();
+  drawCustomSymbol();
 }
 
 /** ===========================================================
- * \fn      drawCircle
+ * \fn      drawCircleSymbol
  * \brief   draws a circle on given coordinate with given
- *          radius into the buffer
+ *          radius into the customSymbol
  *
- * \requ    setPixel(), drawBufferSymbol();
+ * \requ    setPixel(), drawCustomSymbol();
  *
  * \param   (byte) x0, y0 origo of the circle
  *          (byte) radius of the circle
  * \return  -
  ============================================================== */
-void drawCircle(byte x0, byte y0, byte r)
+void drawCircleSymbol(byte x0, byte y0, byte r)
 {
   int f = 1 - r;
   int ddF_x = 1;
@@ -1974,21 +1974,21 @@ void drawCircle(byte x0, byte y0, byte r)
     setPixel(x0 - y, y0 - x);
   }
   
-  drawBufferSymbol();
+  drawCustomSymbol();
 }
 
 /** ===========================================================
- * \fn      drawFilledCircle
+ * \fn      drawFilledCircleSymbol
  * \brief   draws a filled circle on given coordinate with
- *          given radius into the buffer
+ *          given radius into the customSymbol
  *
- * \requ    drawHLine(), drawLine(), drawBufferSymbol();
+ * \requ    drawHLine(), drawLine(), drawCustomSymbol();
  *
  * \param   (byte) x0, y0 origo of the circle
  *          (byte) radius of the circle
  * \return  -
  ============================================================== */
-void drawFilledCircle(byte x0, byte y0, byte r)
+void drawFilledCircleSymbol(byte x0, byte y0, byte r)
 {
   int f = 1 - r;
   int ddF_x = 1;
@@ -2016,42 +2016,42 @@ void drawFilledCircle(byte x0, byte y0, byte r)
     drawLine(x0 + y, y0 - x, x0 - y, y0 - x);
   }
   
-  drawBufferSymbol();
+  drawCustomSymbol();
 }
 
 /** ===========================================================
- * \fn      drawTriangle
+ * \fn      drawTriangleSymbol
  * \brief   draws a triangle on given coordinates into the
- *          buffer
+ *          customSymbol
  *
- * \requ    drawLine(), drawBufferSymbol();
+ * \requ    drawLine(), drawCustomSymbol();
  *
  * \param   (byte) x0-x2, y0-y2 coordinates of the triangle
  *                corners
  * \return  -
  ============================================================== */
-void drawTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
+void drawTriangleSymbol(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
 {
   drawLine(x0, y0, x1, y1);
   drawLine(x0, y0, x2, y2);
   drawLine(x1, y1, x2, y2);
   
-  drawBufferSymbol();
+  drawCustomSymbol();
 }
 
 /** ===========================================================
- * \fn      drawFilledTriangle
+ * \fn      drawFilledTriangleSymbol
  * \brief   draws a filled triangle on given coordinates into
- *          the buffer
+ *          the customSymbol
  *          (uses the Bresenham's line-drawing algorithm)
  *
- * \requ    drawLine(), drawBufferSymbol();
+ * \requ    drawLine(), drawCustomSymbol();
  *
  * \param   (byte) x0-x2, y0-y2 coordinates of the triangle
  *                corners
  * \return  -
  ============================================================== */
-void drawFilledTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
+void drawFilledTriangleSymbol(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
 {
   /* do the same as in the drawLine() function but draw lines to
    the static corner x2,y2 instaed of single pixels */
@@ -2136,7 +2136,7 @@ void drawFilledTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
     }
   } 
   
-  drawBufferSymbol();
+  drawCustomSymbol();
 }
 
 /** ===========================================================
@@ -2144,7 +2144,7 @@ void drawFilledTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
  * \brief   draws an ellipse with small parameterson or a
  *          random pattern on base of int-overflows
  *
- * \requ    setPixel(), drawBufferSymbol();
+ * \requ    setPixel(), drawCustomSymbol();
  *
  * \param   (byte) x, y origo
  *          (byte) xr, yr radii
@@ -2160,27 +2160,27 @@ void drawRandomPattern(byte x0, byte y0, byte xr, byte yr)
     }
   }
   
-  drawBufferSymbol();
+  drawCustomSymbol();
 }
 
 /** ===========================================================
- * \fn      showBuffer
- * \brief   serial-prints the buffer
+ * \fn      showCustomSymbol
+ * \brief   serial-prints the customSymbol
  *
  * \param   -
  * \return  -
  ============================================================== */
 #ifdef DEBUGGING
-void showBuffer()
+void showCustomSymbol()
 {
-  for (byte y = 0; y < BUFFER_SIZE; y++)
+  for (byte y = 0; y < CUSTOM_SYMBOL_SIZE; y++)
   {
     Serial.println();
-    for (byte x = 0; x < BUFFER_WIDTH / NUMBER_OF_PIXELS_PER_BYTE; x++)
+    for (byte x = 0; x < CUSTOM_SYMBOL_WIDTH / NUMBER_OF_PIXELS_PER_BYTE; x++)
     {      
       for (byte mask = 0b10000000; mask > 0; mask = mask >> 1)
       {
-        if ((buffer[y][x] & mask) > 0) Serial.print(1);
+        if ((customSymbol[y][x] & mask) > 0) Serial.print(1);
         else Serial.print(0);
       }
     }
@@ -2227,10 +2227,10 @@ void drawSymbol(struct symbol *symbolPtr)
           /* 16 bit ASCII character */
           interestingByte = pgm_read_byte(&(characters[(symbolPtr -> c) - ASCII_FIRST_CHARACTER_OFFSET][cy][cx]));
         }
-        else if ((symbolPtr -> c) == BUFFER_NAME_OFFSET)
+        else if ((symbolPtr -> c) == CUSTOM_SYMBOL_NAME_OFFSET)
         {
-          /* buffer */
-          interestingByte = buffer[cy][cx];
+          /* customSymbol */
+          interestingByte = customSymbol[cy][cx];
         }
         else
         {
@@ -2304,17 +2304,17 @@ void drawSymbols()
 }
 
 /** ===========================================================
- * \fn      drawBufferSymbol
- * \brief   shows the buffer symbol on the display if existing
+ * \fn      drawCustomSymbol
+ * \brief   shows the customSymbol on the display if existing
  *
- * \requ    drawSymbol(), getBufferSymbol()
+ * \requ    drawSymbol(), getCustomSymbol()
  *
  * \param   -
  * \return  -
  ============================================================== */
-void drawBufferSymbol()
+void drawCustomSymbol()
 {
-  if (getBufferSymbol() != NULL) drawSymbol(getBufferSymbol());
+  if (getCustomSymbol() != NULL) drawSymbol(getCustomSymbol());
 }
 
 /** ===========================================================
@@ -3451,16 +3451,16 @@ int getYear()
 
 //  /* receive */
 //  byte nBytes = 1;
-//  char messageBuffer[MESSAGE_SIZE];
+//  char messageCustomSymbol[MESSAGE_SIZE];
 //  Wire.requestFrom((byte)RTC_ADDRESS, (byte)nBytes);
-//  for (unsigned int cnt = 0; Wire.available() && cnt < sizeof(messageBuffer); cnt++)
+//  for (unsigned int cnt = 0; Wire.available() && cnt < sizeof(messageCustomSymbol); cnt++)
 //  {
-//    messageBuffer[cnt] = Wire.read();
+//    messageCustomSymbol[cnt] = Wire.read();
 //  }
 
 /** ===========================================================
  * \fn      showRTC
- * \brief   serial-prints the current time of the buffer
+ * \brief   serial-prints the current time of the customSymbol
  *
  * \param   -
  * \return  -

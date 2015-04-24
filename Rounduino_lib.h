@@ -82,10 +82,10 @@
 #define PICTURE_ARRAY_POS_LARROW         3
 #define PICTURE_ARRAY_POS_RARROW         4
 
-/* buffer */
-#define BUFFER_SIZE                     32
-#define BUFFER_WIDTH                    32
-#define BUFFER_NAME_OFFSET             255    // last possible id
+/* custom symbol */
+#define CUSTOM_SYMBOL_SIZE              32
+#define CUSTOM_SYMBOL_WIDTH             32
+#define CUSTOM_SYMBOL_NAME_OFFSET      255    // last possible number
 
 /* battery voltage scan */
 #define V_SCAN_ADC                      10    // ADC10
@@ -219,7 +219,7 @@ struct rtc
 extern struct symbol *head;
 extern struct symbol *tail;
 
-extern byte buffer[BUFFER_SIZE][BUFFER_WIDTH / NUMBER_OF_PIXELS_PER_BYTE];
+extern byte customSymbol[CUSTOM_SYMBOL_SIZE][CUSTOM_SYMBOL_WIDTH / NUMBER_OF_PIXELS_PER_BYTE];
 
 extern struct rtc Time;
 
@@ -233,19 +233,19 @@ extern void initRounduino();
 extern void turnOff();
 
 /* functions to generate symbols */
-extern void setCircle(byte x, byte y, byte b);
-extern void setTriangle(byte x, byte y, byte b);
-extern void setSquare(byte x, byte y, byte b);
-extern void setLArrow(byte x, byte y, byte b);
-extern void setRArrow(byte x, byte y, byte b);
+extern void setCircleSymbol(byte x, byte y, byte b);
+extern void setTriangleSymbol(byte x, byte y, byte b);
+extern void setSquareSymbol(byte x, byte y, byte b);
+extern void setLArrowSymbol(byte x, byte y, byte b);
+extern void setRArrowSymbol(byte x, byte y, byte b);
 
-extern void setBigNumber(char c, byte x, byte y, byte b);
+extern void setBigNumberSymbol(char c, byte x, byte y, byte b);
 extern void drawBigNumbers(const char str[], byte x, byte y, byte b);
 
-extern void setChar(char c, byte x, byte y, byte b);
+extern void setCharSymbol(char c, byte x, byte y, byte b);
 extern void drawString(const char str[], byte x, byte y, byte b);
 
-extern void setBuffer(byte x, byte y, byte b);
+extern void setCustomSymbol(byte x, byte y, byte b);
 
 /* functions to manipulate the symbols in the symbol list */
 extern void moveSymbolAbove(struct symbol *s1, struct symbol *s2);
@@ -259,7 +259,7 @@ extern void clearSymbolList();
 
 /* functions to get informations of the symbol list */
 extern byte getNumberOfSymbols();
-extern struct symbol *getBufferSymbol();
+extern struct symbol *getCustomSymbol();
 
 #ifdef DEBUGGING
 extern void showSymbolList();
@@ -291,16 +291,16 @@ extern byte getSymbolWidth(symbol *s);
 extern byte getSymbolHeight(symbol *s);
 extern byte getSymbolBrigthness(symbol *s);
 
-/* functions to handle the buffer */
-extern void fillBuffer();
-extern void clearBuffer();
+/* functions to handle the custom symbol */
+extern void fillCustomSymbol();
+extern void clearCustomSymbol();
 
 extern void setPixel(byte x, byte y);
 extern void clearPixel(byte x, byte y);
 extern byte getPixel(byte x, byte y);
 
-extern void rotateBufferContentCW();
-extern void rotateBufferContentACW();
+extern void rotateCustomSymbolContentCW();
+extern void rotateCustomSymbolContentACW();
 
 extern void drawLine(int x0, int y0, int x1, int y1);
 extern void drawHLine(byte x, byte y, byte l);
@@ -308,20 +308,20 @@ extern void drawVLine(byte x, byte y, byte h);
 
 extern void drawRectangle(byte x, byte y, byte l, byte h);
 extern void drawFilledRectangle(byte x, byte y, byte l, byte h);
-extern void drawCircle(byte x0, byte y0, byte r);
-extern void drawFilledCircle(byte x0, byte y0, byte r);
-extern void drawTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2);
-extern void drawFilledTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2);
+extern void drawCircleSymbol(byte x0, byte y0, byte r);
+extern void drawFilledCircleSymbol(byte x0, byte y0, byte r);
+extern void drawTriangleSymbol(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2);
+extern void drawFilledTriangleSymbol(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2);
 extern void drawRandomPattern(byte x0, byte y0, byte xr, byte yr);
 
 #ifdef DEBUGGING
-extern void showBuffer();
+extern void showCustomSymbol();
 #endif
 
 /* functions to handle the display outputs */
 extern void drawSymbol(struct symbol *symbolPtr);
 extern void drawSymbols();
-extern void drawBufferSymbol();
+extern void drawCustomSymbol();
 extern void redrawSymbols();
 
 extern void fillDisplay();
