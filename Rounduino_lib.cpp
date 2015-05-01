@@ -2000,22 +2000,28 @@ void addFilledRectangle(byte x, byte y, byte w, byte h)
  *
  * \requ    addPixel(), drawCustomSymbol();
  *
- * \param   (byte) x0, y0 origo of the circle
+ * \param   (byte) x0, y0 origin of the circle
  *          (byte) radius of the circle
+ *          (bool) option to set if the circle has an even or odd width/height
  * \return  -
  ============================================================== */
-void addCircle(byte x0, byte y0, byte r)
+void addCircle(byte x0, byte y0, byte r, boolean even)
 {
   int f = 1 - r;
   int ddF_x = 1;
   int ddF_y = -2 * r;
   int x = 0;
   int y = r;
+  int o = 1;  // Offset for arcs if width/height is odd
 
-  addPixel(x0, y0+r);
-  addPixel(x0, y0-r);
-  addPixel(x0+r, y0);
-  addPixel(x0-r, y0);
+  if(!even)
+  {
+    o = 0;
+    addPixel(x0, y0+r);
+    addPixel(x0, y0-r);
+    addPixel(x0+r, y0);
+    addPixel(x0-r, y0);
+  }
 
   while (x < y)
   {
@@ -2029,17 +2035,15 @@ void addCircle(byte x0, byte y0, byte r)
     ddF_x += 2;
     f += ddF_x;
 
-    addPixel(x0 + x, y0 + y);
-    addPixel(x0 - x, y0 + y);
-    addPixel(x0 + x, y0 - y);
-    addPixel(x0 - x, y0 - y);
-    addPixel(x0 + y, y0 + x);
-    addPixel(x0 - y, y0 + x);
-    addPixel(x0 + y, y0 - x);
-    addPixel(x0 - y, y0 - x);
+    addPixel(x0   + y, y0+o - x);  //   0° -  45°
+    addPixel(x0   + x, y0+o - y);  //  45° -  90°
+    addPixel(x0+o - x, y0+o - y);  //  90° - 135°
+    addPixel(x0+o - y, y0+o - x);  // 135° - 180°
+    addPixel(x0+o - y, y0   + x);  // 180° - 225°
+    addPixel(x0+o - x, y0   + y);  // 225° - 270°
+    addPixel(x0   + x, y0   + y);  // 270° - 315°
+    addPixel(x0   + y, y0   + x);  // 315° - 360°
   }
-  
-  drawCustomSymbol();
 }
 
 /** ===========================================================
@@ -2049,19 +2053,25 @@ void addCircle(byte x0, byte y0, byte r)
  *
  * \requ    addHLine(), addLine(), drawCustomSymbol();
  *
- * \param   (byte) x0, y0 origo of the circle
+ * \param   (byte) x0, y0 origin of the circle
  *          (byte) radius of the circle
+ *          (bool) option to set if the circle has an even or odd width/height
  * \return  -
  ============================================================== */
-void addFilledCircle(byte x0, byte y0, byte r)
+void addFilledCircle(byte x0, byte y0, byte r, boolean even)
 {
-  int f = 1 - r;      //-9
-  int ddF_x = 1;      //1
-  int ddF_y = -2 * r; //-20
-  int x = 0;          //0
-  int y = r;          //10
+  int f = 1 - r;
+  int ddF_x = 1;
+  int ddF_y = -2 * r;
+  int x = 0;
+  int y = r;
+  int o = 1;  // Offset for arcs if width/height is odd
 
-  addHLine(x0 - r, y0, 2 * r + 1);
+  if(!even)
+  {
+    o = 0;
+    addHLine(x0 - r, y0, 2 * r + 1);
+  }
 
   while (x < y)
   {
@@ -2075,13 +2085,11 @@ void addFilledCircle(byte x0, byte y0, byte r)
     ddF_x += 2;
     f += ddF_x;
 
-    addLine(x0 + x, y0 + y, x0 - x, y0 + y);
-    addLine(x0 + x, y0 - y, x0 - x, y0 - y);
-    addLine(x0 + y, y0 + x, x0 - y, y0 + x);
-    addLine(x0 + y, y0 - x, x0 - y, y0 - x);
+    addLine(x0   + x, y0   + y, x0+o - x, y0   + y);  // Bottom
+    addLine(x0   + x, y0+o - y, x0+o - x, y0+o - y);  // Top
+    addLine(x0   + y, y0   + x, x0+o - y, y0   + x);  // Middle bottom
+    addLine(x0   + y, y0+o - x, x0+o - y, y0+o - x);  // Middle top
   }
-  
-  drawCustomSymbol();
 }
 
 /** ===========================================================

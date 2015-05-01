@@ -308,8 +308,8 @@ extern void addVLine(byte x, byte y, byte h);
 
 extern void addRectangle(byte x, byte y, byte l, byte h);
 extern void addFilledRectangle(byte x, byte y, byte l, byte h);
-extern void addCircle(byte x0, byte y0, byte r);
-extern void addFilledCircle(byte x0, byte y0, byte r);
+extern void addCircle(byte x0, byte y0, byte r, boolean even);
+extern void addFilledCircle(byte x0, byte y0, byte r, boolean even);
 extern void addTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2);
 extern void addFilledTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2);
 extern void addRandomPattern(byte x0, byte y0, byte xr, byte yr);
