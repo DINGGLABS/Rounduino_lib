@@ -952,7 +952,7 @@ static struct symbol *popSymbol(struct symbol *s)
  * \param   -
  * \return  (*symbol) pointer on taken symbol
  ============================================================== */
-static struct symbol *popSymbolHead(void)
+static struct symbol *popSymbolHead()
 { 
   struct symbol *ptr = NULL;
   
@@ -978,7 +978,7 @@ static struct symbol *popSymbolHead(void)
  * \param   -
  * \return  (*symbol) pointer on taken symbol
  ============================================================== */
-static struct symbol *popSymbolTail(void)
+static struct symbol *popSymbolTail()
 {   
   struct symbol *ptr = NULL;
   
@@ -1957,16 +1957,16 @@ void addVLine(byte x, byte y, byte h)
  * \requ    addHLine(), addVLine(), drawCustomSymbol()
  *
  * \param   (byte) x, y top left coordinate of the rectangle
- *          (byte) length of the rectangle
+ *          (byte) width of the rectangle
  *          (byte) height of the rectangle
  * \return  -
  ============================================================== */
-void addRectangle(byte x, byte y, byte l, byte h)
+void addRectangle(byte x, byte y, byte w, byte h)
 {
-  addHLine(x, y, l);
+  addHLine(x, y, w);
   addVLine(x, y, h);
-  addHLine(x, y + h - 1, l);
-  addVLine(x + l - 1, y, h);
+  addHLine(x, y + h - 1, w);
+  addVLine(x + w - 1, y, h);
   
   drawCustomSymbol();
 }
@@ -1979,15 +1979,15 @@ void addRectangle(byte x, byte y, byte l, byte h)
  * \requ    addHLine(), drawCustomSymbol();
  *
  * \param   (byte) x, y top left coordinate of the rectangle
- *          (byte) length of the rectangle
+ *          (byte) width of the rectangle
  *          (byte) height of the rectangle
  * \return  -
  ============================================================== */
-void addFilledRectangle(byte x, byte y, byte l, byte h)
+void addFilledRectangle(byte x, byte y, byte w, byte h)
 {
   for (byte i = y; i < y + h; i++)
   {
-    addHLine(x, i, l);
+    addHLine(x, i, w);
   }
   
   drawCustomSymbol();
