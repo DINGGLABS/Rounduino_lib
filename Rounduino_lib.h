@@ -232,20 +232,20 @@ extern void initRounduino();
 
 extern void turnOff();
 
-/* functions to generate symbols */
-extern void setCircleSymbol(byte x, byte y, byte b);
-extern void setTriangleSymbol(byte x, byte y, byte b);
-extern void setSquareSymbol(byte x, byte y, byte b);
-extern void setLArrowSymbol(byte x, byte y, byte b);
-extern void setRArrowSymbol(byte x, byte y, byte b);
+/* functions to create symbols */
+extern void createCircleSymbol(byte x, byte y, byte b);
+extern void createTriangleSymbol(byte x, byte y, byte b);
+extern void createSquareSymbol(byte x, byte y, byte b);
+extern void createLArrowSymbol(byte x, byte y, byte b);
+extern void createRArrowSymbol(byte x, byte y, byte b);
 
-extern void setBigNumberSymbol(unsigned char c, byte x, byte y, byte b);
+extern void createBigNumberSymbol(unsigned char c, byte x, byte y, byte b);
 extern void drawBigNumbers(const unsigned char str[], byte x, byte y, byte b);
 
-extern void setCharSymbol(unsigned char c, byte x, byte y, byte b);
+extern void createCharSymbol(unsigned char c, byte x, byte y, byte b);
 extern void drawString(const unsigned char str[], byte x, byte y, byte b);
 
-extern void setCustomSymbol(byte x, byte y, byte b);
+extern void createCustomSymbol(byte x, byte y, byte b);
 
 /* functions to manipulate the symbols in the symbol list */
 extern void moveSymbolAbove(struct symbol *s1, struct symbol *s2);
@@ -295,24 +295,24 @@ extern byte getSymbolBrigthness(symbol *s);
 extern void fillCustomSymbol();
 extern void clearCustomSymbol();
 
-extern void setPixel(byte x, byte y);
+extern void addPixel(byte x, byte y);
 extern void clearPixel(byte x, byte y);
 extern byte getPixel(byte x, byte y);
 
 extern void rotateCustomSymbolContentCW();
 extern void rotateCustomSymbolContentACW();
 
-extern void drawLine(int x0, int y0, int x1, int y1);
-extern void drawHLine(byte x, byte y, byte l);
-extern void drawVLine(byte x, byte y, byte h);
+extern void addLine(int x0, int y0, int x1, int y1);
+extern void addHLine(byte x, byte y, byte l);
+extern void addVLine(byte x, byte y, byte h);
 
-extern void drawRectangle(byte x, byte y, byte l, byte h);
-extern void drawFilledRectangle(byte x, byte y, byte l, byte h);
-extern void drawCircle(byte x0, byte y0, byte r);
-extern void drawFilledCircle(byte x0, byte y0, byte r);
-extern void drawTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2);
-extern void drawFilledTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2);
-extern void drawRandomPattern(byte x0, byte y0, byte xr, byte yr);
+extern void addRectangle(byte x, byte y, byte l, byte h);
+extern void addFilledRectangle(byte x, byte y, byte l, byte h);
+extern void addCircle(byte x0, byte y0, byte r);
+extern void addFilledCircle(byte x0, byte y0, byte r);
+extern void addTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2);
+extern void addFilledTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2);
+extern void addRandomPattern(byte x0, byte y0, byte xr, byte yr);
 
 #ifdef DEBUGGING
 extern void showCustomSymbol();

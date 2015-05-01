@@ -391,8 +391,8 @@ static void initTimerInterrupt_CTC_3()
 
 /* functions to generate symbols ------------------------------ */
 /** ===========================================================
- * \fn      setCircleSymbol
- * \brief   generates a circle symbol
+ * \fn      createCircleSymbol
+ * \brief   adds a circle symbol in the symbol list
  *
  * \requ    addSymbolTail()
  *
@@ -400,7 +400,7 @@ static void initTimerInterrupt_CTC_3()
  *          (byte) brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setCircleSymbol(byte x, byte y, byte b)
+void createCircleSymbol(byte x, byte y, byte b)
 {
   /* limit input paramters */
   if (x >= NUMBER_OF_PIXELS_PER_ROW) x = NUMBER_OF_PIXELS_PER_ROW - 1;
@@ -426,8 +426,8 @@ void setCircleSymbol(byte x, byte y, byte b)
 }
 
 /** ===========================================================
- * \fn      setTriangleSymbol
- * \brief   generates a triangle symbol
+ * \fn      createTriangleSymbol
+ * \brief   adds a triangle symbol in the symbol list
  *
  * \requ    addSymbolTail()
  *
@@ -435,7 +435,7 @@ void setCircleSymbol(byte x, byte y, byte b)
  *          (byte) brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setTriangleSymbol(byte x, byte y, byte b)
+void createTriangleSymbol(byte x, byte y, byte b)
 {
   /* limit input paramters */
   if (x >= NUMBER_OF_PIXELS_PER_ROW) x = NUMBER_OF_PIXELS_PER_ROW - 1;
@@ -461,8 +461,8 @@ void setTriangleSymbol(byte x, byte y, byte b)
 }
 
 /** ===========================================================
- * \fn      setSquareSymbol
- * \brief   generates a square symbol
+ * \fn      createSquareSymbol
+ * \brief   adds a square symbol in the symbol list
  *
  * \requ    addSymbolTail()
  *
@@ -470,7 +470,7 @@ void setTriangleSymbol(byte x, byte y, byte b)
  *          (byte) brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setSquareSymbol(byte x, byte y, byte b)
+void createSquareSymbol(byte x, byte y, byte b)
 {
   /* limit input paramters */
   if (x >= NUMBER_OF_PIXELS_PER_ROW) x = NUMBER_OF_PIXELS_PER_ROW - 1;
@@ -496,8 +496,8 @@ void setSquareSymbol(byte x, byte y, byte b)
 }
 
 /** ===========================================================
- * \fn      setLArrowSymbol
- * \brief   generates a left arrow symbol
+ * \fn      createLArrowSymbol
+ * \brief   adds a left arrow symbol in the symbol list
  *
  * \requ    addSymbolTail()
  *
@@ -505,7 +505,7 @@ void setSquareSymbol(byte x, byte y, byte b)
  *          (byte) brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setLArrowSymbol(byte x, byte y, byte b)
+void createLArrowSymbol(byte x, byte y, byte b)
 {
   /* limit input paramters */
   if (x >= NUMBER_OF_PIXELS_PER_ROW) x = NUMBER_OF_PIXELS_PER_ROW - 1;
@@ -531,8 +531,8 @@ void setLArrowSymbol(byte x, byte y, byte b)
 }
 
 /** ===========================================================
- * \fn      setRArrowSymbol
- * \brief   generates a right arrow symbol
+ * \fn      createRArrowSymbol
+ * \brief   adds a right arrow symbol in the symbol list
  *
  * \requ    addSymbolTail()
  *
@@ -540,7 +540,7 @@ void setLArrowSymbol(byte x, byte y, byte b)
  *          (byte) brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setRArrowSymbol(byte x, byte y, byte b)
+void createRArrowSymbol(byte x, byte y, byte b)
 {
   /* limit input paramters */
   if (x >= NUMBER_OF_PIXELS_PER_ROW) x = NUMBER_OF_PIXELS_PER_ROW - 1;
@@ -566,8 +566,8 @@ void setRArrowSymbol(byte x, byte y, byte b)
 }
 
 /** ===========================================================
- * \fn      setBigNumberSymbol
- * \brief   generates a big number symbol
+ * \fn      createBigNumberSymbol
+ * \brief   adds a big number symbol in the symbol list
  *
  * \requ    addSymbolTail()
  *
@@ -576,7 +576,7 @@ void setRArrowSymbol(byte x, byte y, byte b)
  *          (byte)  brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setBigNumberSymbol(unsigned char c, byte x, byte y, byte b)
+void createBigNumberSymbol(unsigned char c, byte x, byte y, byte b)
 {
   /* limit input paramters */
   if (c > '?') c = '?';
@@ -604,10 +604,10 @@ void setBigNumberSymbol(unsigned char c, byte x, byte y, byte b)
 
 /** ===========================================================
  * \fn      drawBigNumbers
- * \brief   draws a string of big numbers on given position on
- *          the display
+ * \brief   adds multiple big number symbols in the symbol list
+ *          and draws them on given position on the display
  *
- * \requ    setBigNumberSymbol(), drawSymbols()
+ * \requ    createBigNumberSymbol(), drawSymbols()
  *
  * \param   (uchar[]) constant string (char array)
  *          (byte)    x, y top left coordinate of the string
@@ -644,15 +644,15 @@ void drawBigNumbers(const unsigned char str[], byte x, byte y, byte b)
     {
       
     }
-    setBigNumberSymbol((byte)str[i], currentX, y, b);
+    createBigNumberSymbol((byte)str[i], currentX, y, b);
   }
 
   drawSymbols();
 }
 
 /** ===========================================================
- * \fn      setCharSymbol
- * \brief   generates a char symbol
+ * \fn      createCharSymbol
+ * \brief   adds a char symbol in the symbol list
  *
  * \requ    addSymbolTail()
  *
@@ -661,7 +661,7 @@ void drawBigNumbers(const unsigned char str[], byte x, byte y, byte b)
  *          (byte)  brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setCharSymbol(unsigned char c, byte x, byte y, byte b)
+void createCharSymbol(unsigned char c, byte x, byte y, byte b)
 {
   /* limit input paramters */
   if (c > '~') c = ' ';
@@ -689,9 +689,10 @@ void setCharSymbol(unsigned char c, byte x, byte y, byte b)
 
 /** ===========================================================
  * \fn      drawString
- * \brief   draws a string on given position on the display
+ * \brief   adds multiple char symbols in the symbol list
+ *          and draws them on given position on the display
  *
- * \requ    setCharSymbol(), drawSymbols()
+ * \requ    createCharSymbol(), drawSymbols()
  *
  * \param   (uchar[]) constant string (char array)
  *          (byte)    x, y top left coordinate of the string
@@ -728,15 +729,16 @@ void drawString(const unsigned char str[], byte x, byte y, byte b)
     {
       
     }
-    setCharSymbol((byte)str[i], currentX, y, b);
+    createCharSymbol((byte)str[i], currentX, y, b);
   }
 
   drawSymbols();
 }
 
 /** ===========================================================
- * \fn      setCustomSymbol
- * \brief   generates a customSymbol or overwrites existing
+ * \fn      createCustomSymbol
+ * \brief   adds the customSymbol in the symbol list or
+ *          overwrites existing
  *
  * \requ    addSymbolTail(), replaceSymbol()
  *
@@ -744,7 +746,7 @@ void drawString(const unsigned char str[], byte x, byte y, byte b)
  *          (byte) brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setCustomSymbol(byte x, byte y, byte b)
+void createCustomSymbol(byte x, byte y, byte b)
 { 
   /* limit input paramters */
   if (x >= NUMBER_OF_PIXELS_PER_ROW - CUSTOM_SYMBOL_WIDTH) x = NUMBER_OF_PIXELS_PER_ROW - CUSTOM_SYMBOL_WIDTH - 1;
@@ -1603,7 +1605,7 @@ void clearCustomSymbol()
 }
 
 /** ===========================================================
- * \fn      setPixel
+ * \fn      addPixel
  * \brief   sets a single monochrome pixel in the customSymbol
  *
  * \param   (byte) x coordinate of the pixel within the customSymbol
@@ -1612,7 +1614,7 @@ void clearCustomSymbol()
  *                 (0... CUSTOM_SYMBOL_SIZE - 1)
  * \return  -
  ============================================================== */
-void setPixel(byte x, byte y)
+void addPixel(byte x, byte y)
 {
   /* limit input paramters */
   if (x >= CUSTOM_SYMBOL_WIDTH) x = CUSTOM_SYMBOL_WIDTH - 1;
@@ -1744,7 +1746,7 @@ void rotateCustomSymbolContentCW()
       currentY = x;
 
       pixelB = getPixel(currentX, currentY);
-      if (pixelA) setPixel(currentX, currentY);
+      if (pixelA) addPixel(currentX, currentY);
       else clearPixel(currentX, currentY);
 
       newX = maxXY - currentY;
@@ -1753,7 +1755,7 @@ void rotateCustomSymbolContentCW()
       currentY = newY;
 
       pixelA = getPixel(currentX, currentY);
-      if (pixelB) setPixel(currentX, currentY);
+      if (pixelB) addPixel(currentX, currentY);
       else clearPixel(currentX, currentY);
 
       newX = maxXY - currentY;
@@ -1762,7 +1764,7 @@ void rotateCustomSymbolContentCW()
       currentY = newY;
 
       pixelB = getPixel(currentX, currentY);
-      if (pixelA) setPixel(currentX, currentY);
+      if (pixelA) addPixel(currentX, currentY);
       else clearPixel(currentX, currentY);
 
       newX = maxXY - currentY;
@@ -1771,7 +1773,7 @@ void rotateCustomSymbolContentCW()
       currentY = newY;
 
       pixelA = getPixel(currentX, currentY);
-      if (pixelB) setPixel(currentX, currentY);
+      if (pixelB) addPixel(currentX, currentY);
       else clearPixel(currentX, currentY);
     }  
   }
@@ -1806,7 +1808,7 @@ void rotateCustomSymbolContentACW()
       currentY = maxXY - x;
 
       pixelB = getPixel(currentX, currentY);
-      if (pixelA) setPixel(currentX, currentY);
+      if (pixelA) addPixel(currentX, currentY);
       else clearPixel(currentX, currentY);
 
       newX = currentY;
@@ -1815,7 +1817,7 @@ void rotateCustomSymbolContentACW()
       currentY = newY;
 
       pixelA = getPixel(currentX, currentY);
-      if (pixelB) setPixel(currentX, currentY);
+      if (pixelB) addPixel(currentX, currentY);
       else clearPixel(currentX, currentY);
 
       newX = currentY;
@@ -1824,7 +1826,7 @@ void rotateCustomSymbolContentACW()
       currentY = newY;
 
       pixelB = getPixel(currentX, currentY);
-      if (pixelA) setPixel(currentX, currentY);
+      if (pixelA) addPixel(currentX, currentY);
       else clearPixel(currentX, currentY);
 
       newX = currentY;
@@ -1833,14 +1835,14 @@ void rotateCustomSymbolContentACW()
       currentY = newY;
 
       pixelA = getPixel(currentX, currentY);
-      if (pixelB) setPixel(currentX, currentY);
+      if (pixelB) addPixel(currentX, currentY);
       else clearPixel(currentX, currentY);
     }  
   }
 }
 
 /** ===========================================================
- * \fn      drawLine
+ * \fn      addLine
  * \brief   writes a line on given coordinates into the customSymbol
  *          (uses the Bresenham's line-drawing algorithm)
  *
@@ -1848,7 +1850,7 @@ void rotateCustomSymbolContentACW()
  *          (int) x1, y1 end coordinate of the line
  * \return  -
  ============================================================== */
-void drawLine(int x0, int y0, int x1, int y1)
+void addLine(int x0, int y0, int x1, int y1)
 { 
   int dx = x1 - x0;
   int dy = y1 - y0;
@@ -1867,7 +1869,7 @@ void drawLine(int x0, int y0, int x1, int y1)
   x = dy_abs >> 1;  // dy_abs/2
   y = dx_abs >> 1;  // dx_abs/2
 
-  setPixel(x0, y0); // set first pixel
+  addPixel(x0, y0); // set first pixel
 
   if (dx_abs >= dy_abs) // the line is more horizontal than vertical
   {
@@ -1880,7 +1882,7 @@ void drawLine(int x0, int y0, int x1, int y1)
         py += s_dy;
       }
       px += s_dx;
-      setPixel(px, py);
+      addPixel(px, py);
     }
   }
   else // the line is more vertical than horizontal
@@ -1894,7 +1896,7 @@ void drawLine(int x0, int y0, int x1, int y1)
         px += s_dx;
       }
       py += s_dy;
-      setPixel(px, py);
+      addPixel(px, py);
     }
   }
 }
@@ -1916,93 +1918,93 @@ static int sgn(int a)
 }
 
 /** ===========================================================
- * \fn      drawHLine
+ * \fn      addHLine
  * \brief   writes a horizontal line on given coordinate into
  *          the customSymbol
  *
- * \requ    drawLine()
+ * \requ    addLine()
  *
  * \param   (byte) x, y start coordinate of the line
  *          (byte) length of the line
  * \return  -
  ============================================================== */
-void drawHLine(byte x, byte y, byte l)
+void addHLine(byte x, byte y, byte l)
 {
-  drawLine(x, y, x + l - 1, y);
+  addLine(x, y, x + l - 1, y);
 }
 
 /** ===========================================================
- * \fn      drawVLine
+ * \fn      addVLine
  * \brief   writes a vertical line on given coordinate into the
  *          customSymbol
  *
- * \requ    drawLine()
+ * \requ    addLine()
  *
  * \param   (byte) x, y start coordinate of the line
  *          (byte) height of the line
  * \return  -
  ============================================================== */
-void drawVLine(byte x, byte y, byte h)
+void addVLine(byte x, byte y, byte h)
 {
-  drawLine(x, y, x, y + h - 1);
+  addLine(x, y, x, y + h - 1);
 }
 
 /** ===========================================================
- * \fn      drawRectangle
+ * \fn      addRectangle
  * \brief   draws a rectangle on given coordinate into the
  *          customSymbol
  *
- * \requ    drawHLine(), drawVLine(), drawCustomSymbol()
+ * \requ    addHLine(), addVLine(), drawCustomSymbol()
  *
  * \param   (byte) x, y top left coordinate of the rectangle
  *          (byte) length of the rectangle
  *          (byte) height of the rectangle
  * \return  -
  ============================================================== */
-void drawRectangle(byte x, byte y, byte l, byte h)
+void addRectangle(byte x, byte y, byte l, byte h)
 {
-  drawHLine(x, y, l);
-  drawVLine(x, y, h);
-  drawHLine(x, y + h - 1, l);
-  drawVLine(x + l - 1, y, h);
+  addHLine(x, y, l);
+  addVLine(x, y, h);
+  addHLine(x, y + h - 1, l);
+  addVLine(x + l - 1, y, h);
   
   drawCustomSymbol();
 }
 
 /** ===========================================================
- * \fn      drawFilledRectangle
+ * \fn      addFilledRectangle
  * \brief   draws a filled rectangle on given coordinates into
  *          the customSymbol
  *
- * \requ    drawHLine(), drawCustomSymbol();
+ * \requ    addHLine(), drawCustomSymbol();
  *
  * \param   (byte) x, y top left coordinate of the rectangle
  *          (byte) length of the rectangle
  *          (byte) height of the rectangle
  * \return  -
  ============================================================== */
-void drawFilledRectangle(byte x, byte y, byte l, byte h)
+void addFilledRectangle(byte x, byte y, byte l, byte h)
 {
   for (byte i = y; i < y + h; i++)
   {
-    drawHLine(x, i, l);
+    addHLine(x, i, l);
   }
   
   drawCustomSymbol();
 }
 
 /** ===========================================================
- * \fn      drawCircle
+ * \fn      addCircle
  * \brief   draws a circle on given coordinate with given
  *          radius into the customSymbol
  *
- * \requ    setPixel(), drawCustomSymbol();
+ * \requ    addPixel(), drawCustomSymbol();
  *
  * \param   (byte) x0, y0 origo of the circle
  *          (byte) radius of the circle
  * \return  -
  ============================================================== */
-void drawCircle(byte x0, byte y0, byte r)
+void addCircle(byte x0, byte y0, byte r)
 {
   int f = 1 - r;
   int ddF_x = 1;
@@ -2010,10 +2012,10 @@ void drawCircle(byte x0, byte y0, byte r)
   int x = 0;
   int y = r;
 
-  setPixel(x0, y0+r);
-  setPixel(x0, y0-r);
-  setPixel(x0+r, y0);
-  setPixel(x0-r, y0);
+  addPixel(x0, y0+r);
+  addPixel(x0, y0-r);
+  addPixel(x0+r, y0);
+  addPixel(x0-r, y0);
 
   while (x < y)
   {
@@ -2027,31 +2029,31 @@ void drawCircle(byte x0, byte y0, byte r)
     ddF_x += 2;
     f += ddF_x;
 
-    setPixel(x0 + x, y0 + y);
-    setPixel(x0 - x, y0 + y);
-    setPixel(x0 + x, y0 - y);
-    setPixel(x0 - x, y0 - y);
-    setPixel(x0 + y, y0 + x);
-    setPixel(x0 - y, y0 + x);
-    setPixel(x0 + y, y0 - x);
-    setPixel(x0 - y, y0 - x);
+    addPixel(x0 + x, y0 + y);
+    addPixel(x0 - x, y0 + y);
+    addPixel(x0 + x, y0 - y);
+    addPixel(x0 - x, y0 - y);
+    addPixel(x0 + y, y0 + x);
+    addPixel(x0 - y, y0 + x);
+    addPixel(x0 + y, y0 - x);
+    addPixel(x0 - y, y0 - x);
   }
   
   drawCustomSymbol();
 }
 
 /** ===========================================================
- * \fn      drawFilledCircle
+ * \fn      addFilledCircle
  * \brief   draws a filled circle on given coordinate with
  *          given radius into the customSymbol
  *
- * \requ    drawHLine(), drawLine(), drawCustomSymbol();
+ * \requ    addHLine(), addLine(), drawCustomSymbol();
  *
  * \param   (byte) x0, y0 origo of the circle
  *          (byte) radius of the circle
  * \return  -
  ============================================================== */
-void drawFilledCircle(byte x0, byte y0, byte r)
+void addFilledCircle(byte x0, byte y0, byte r)
 {
   int f = 1 - r;      //-9
   int ddF_x = 1;      //1
@@ -2059,7 +2061,7 @@ void drawFilledCircle(byte x0, byte y0, byte r)
   int x = 0;          //0
   int y = r;          //10
 
-  drawHLine(x0 - r, y0, 2 * r + 1);
+  addHLine(x0 - r, y0, 2 * r + 1);
 
   while (x < y)
   {
@@ -2073,50 +2075,50 @@ void drawFilledCircle(byte x0, byte y0, byte r)
     ddF_x += 2;
     f += ddF_x;
 
-    drawLine(x0 + x, y0 + y, x0 - x, y0 + y);
-    drawLine(x0 + x, y0 - y, x0 - x, y0 - y);
-    drawLine(x0 + y, y0 + x, x0 - y, y0 + x);
-    drawLine(x0 + y, y0 - x, x0 - y, y0 - x);
+    addLine(x0 + x, y0 + y, x0 - x, y0 + y);
+    addLine(x0 + x, y0 - y, x0 - x, y0 - y);
+    addLine(x0 + y, y0 + x, x0 - y, y0 + x);
+    addLine(x0 + y, y0 - x, x0 - y, y0 - x);
   }
   
   drawCustomSymbol();
 }
 
 /** ===========================================================
- * \fn      drawTriangle
+ * \fn      addTriangle
  * \brief   draws a triangle on given coordinates into the
  *          customSymbol
  *
- * \requ    drawLine(), drawCustomSymbol();
+ * \requ    addLine(), drawCustomSymbol();
  *
  * \param   (byte) x0-x2, y0-y2 coordinates of the triangle
  *                corners
  * \return  -
  ============================================================== */
-void drawTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
+void addTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
 {
-  drawLine(x0, y0, x1, y1);
-  drawLine(x0, y0, x2, y2);
-  drawLine(x1, y1, x2, y2);
+  addLine(x0, y0, x1, y1);
+  addLine(x0, y0, x2, y2);
+  addLine(x1, y1, x2, y2);
   
   drawCustomSymbol();
 }
 
 /** ===========================================================
- * \fn      drawFilledTriangle
+ * \fn      addFilledTriangle
  * \brief   draws a filled triangle on given coordinates into
  *          the customSymbol
  *          (uses the Bresenham's line-drawing algorithm)
  *
- * \requ    drawLine(), drawCustomSymbol();
+ * \requ    addLine(), drawCustomSymbol();
  *
  * \param   (byte) x0-x2, y0-y2 coordinates of the triangle
  *                corners
  * \return  -
  ============================================================== */
-void drawFilledTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
+void addFilledTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
 {
-  /* do the same as in the drawLine() function but draw lines to
+  /* do the same as in the addLine() function but draw lines to
    the static corner x2,y2 instaed of single pixels */
   int dx = x1 - x0;
   int dy = y1 - y0;
@@ -2140,7 +2142,7 @@ void drawFilledTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
         py += s_dy;
       }
       px += s_dx;
-      drawLine(x2, y2, px, py);
+      addLine(x2, y2, px, py);
     }
   }
   else // the line is more vertical than horizontal
@@ -2154,7 +2156,7 @@ void drawFilledTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
         px += s_dx;
       }
       py += s_dy;
-      drawLine(x2, y2, px, py);
+      addLine(x2, y2, px, py);
     }
   }
 
@@ -2181,7 +2183,7 @@ void drawFilledTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
         py += s_dy;
       }
       px += s_dx;
-      drawLine(x0, y0, px, py);
+      addLine(x0, y0, px, py);
     }
   }
   else // the line is more vertical than horizontal
@@ -2195,7 +2197,7 @@ void drawFilledTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
         px += s_dx;
       }
       py += s_dy;
-      drawLine(x0, y0, px, py);
+      addLine(x0, y0, px, py);
     }
   } 
   
@@ -2203,23 +2205,23 @@ void drawFilledTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
 }
 
 /** ===========================================================
- * \fn      drawRandomPattern
+ * \fn      addRandomPattern
  * \brief   draws an ellipse with small parameterson or a
  *          random pattern on base of int-overflows
  *
- * \requ    setPixel(), drawCustomSymbol();
+ * \requ    addPixel(), drawCustomSymbol();
  *
  * \param   (byte) x, y origo
  *          (byte) xr, yr radii
  * \return  -
  ============================================================== */
-void drawRandomPattern(byte x0, byte y0, byte xr, byte yr)
+void addRandomPattern(byte x0, byte y0, byte xr, byte yr)
 {
   for(int y =- yr; y <= yr; y++)
   {
     for(int x =- xr; x <= xr; x++)
     {
-      if(x*x*yr*yr + y*y*xr*xr <= yr*yr*xr*xr) setPixel(x0 + x, y0 + y);
+      if(x*x*yr*yr + y*y*xr*xr <= yr*yr*xr*xr) addPixel(x0 + x, y0 + y);
     }
   }
   
