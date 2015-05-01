@@ -402,6 +402,11 @@ static void initTimerInterrupt_CTC_3()
  ============================================================== */
 void setCircleSymbol(byte x, byte y, byte b)
 {
+  /* limit input paramters */
+  if (x >= NUMBER_OF_PIXELS_PER_ROW) x = NUMBER_OF_PIXELS_PER_ROW - 1;
+  if (y >= NUMBER_OF_PIXELS_PER_COLUMN) y = NUMBER_OF_PIXELS_PER_COLUMN - 1;
+  if (b > MAX_BRIGHTNESS) b = MAX_BRIGHTNESS;
+
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
   byte temp = x;
@@ -416,7 +421,7 @@ void setCircleSymbol(byte x, byte y, byte b)
   #endif
   
   // circle c = 0
-  struct symbol s = {(byte)(getNumberOfSymbols() + 1), false, (byte)(PICTURE_NAME_OFFSET + PICTURE_ARRAY_POS_CIRCLE), x, y, FONTWIDTH, FONTSIZE, b, NULL, NULL};
+  struct symbol s = {(byte)(getNumberOfSymbols() + 1), false, (byte)(PICTURE_NAME_OFFSET + PICTURE_ARRAY_POS_CIRCLE), x, y, FONTWIDTH_BIG, FONTSIZE_BIG, b, NULL, NULL};
   addSymbolTail(&s);
 }
 
@@ -432,6 +437,11 @@ void setCircleSymbol(byte x, byte y, byte b)
  ============================================================== */
 void setTriangleSymbol(byte x, byte y, byte b)
 {
+  /* limit input paramters */
+  if (x >= NUMBER_OF_PIXELS_PER_ROW) x = NUMBER_OF_PIXELS_PER_ROW - 1;
+  if (y >= NUMBER_OF_PIXELS_PER_COLUMN) y = NUMBER_OF_PIXELS_PER_COLUMN - 1;
+  if (b > MAX_BRIGHTNESS) b = MAX_BRIGHTNESS;
+
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
   byte temp = x;
@@ -446,7 +456,7 @@ void setTriangleSymbol(byte x, byte y, byte b)
   #endif
   
   // circle c = 0
-  struct symbol s = {(byte)(getNumberOfSymbols() + 1), false, (byte)(PICTURE_NAME_OFFSET + PICTURE_ARRAY_POS_TRIANGLE), x, y, FONTWIDTH, FONTSIZE, b, NULL, NULL};
+  struct symbol s = {(byte)(getNumberOfSymbols() + 1), false, (byte)(PICTURE_NAME_OFFSET + PICTURE_ARRAY_POS_TRIANGLE), x, y, FONTWIDTH_BIG, FONTSIZE_BIG, b, NULL, NULL};
   addSymbolTail(&s);
 }
 
@@ -462,6 +472,11 @@ void setTriangleSymbol(byte x, byte y, byte b)
  ============================================================== */
 void setSquareSymbol(byte x, byte y, byte b)
 {
+  /* limit input paramters */
+  if (x >= NUMBER_OF_PIXELS_PER_ROW) x = NUMBER_OF_PIXELS_PER_ROW - 1;
+  if (y >= NUMBER_OF_PIXELS_PER_COLUMN) y = NUMBER_OF_PIXELS_PER_COLUMN - 1;
+  if (b > MAX_BRIGHTNESS) b = MAX_BRIGHTNESS;
+
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
   byte temp = x;
@@ -476,7 +491,7 @@ void setSquareSymbol(byte x, byte y, byte b)
   #endif
   
   // circle c = 0
-  struct symbol s = {(byte)(getNumberOfSymbols() + 1), false, (byte)(PICTURE_NAME_OFFSET + PICTURE_ARRAY_POS_SQUARE), x, y, FONTWIDTH, FONTSIZE, b, NULL, NULL};
+  struct symbol s = {(byte)(getNumberOfSymbols() + 1), false, (byte)(PICTURE_NAME_OFFSET + PICTURE_ARRAY_POS_SQUARE), x, y, FONTWIDTH_BIG, FONTSIZE_BIG, b, NULL, NULL};
   addSymbolTail(&s);
 }
 
@@ -492,6 +507,11 @@ void setSquareSymbol(byte x, byte y, byte b)
  ============================================================== */
 void setLArrowSymbol(byte x, byte y, byte b)
 {
+  /* limit input paramters */
+  if (x >= NUMBER_OF_PIXELS_PER_ROW) x = NUMBER_OF_PIXELS_PER_ROW - 1;
+  if (y >= NUMBER_OF_PIXELS_PER_COLUMN) y = NUMBER_OF_PIXELS_PER_COLUMN - 1;
+  if (b > MAX_BRIGHTNESS) b = MAX_BRIGHTNESS;
+
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
   byte temp = x;
@@ -506,7 +526,7 @@ void setLArrowSymbol(byte x, byte y, byte b)
   #endif
   
   // circle c = 0
-  struct symbol s = {(byte)(getNumberOfSymbols() + 1), false, (byte)(PICTURE_NAME_OFFSET + PICTURE_ARRAY_POS_LARROW), x, y, FONTWIDTH, FONTSIZE, b, NULL, NULL};
+  struct symbol s = {(byte)(getNumberOfSymbols() + 1), false, (byte)(PICTURE_NAME_OFFSET + PICTURE_ARRAY_POS_LARROW), x, y, FONTWIDTH_BIG, FONTSIZE_BIG, b, NULL, NULL};
   addSymbolTail(&s);
 }
 
@@ -522,6 +542,11 @@ void setLArrowSymbol(byte x, byte y, byte b)
  ============================================================== */
 void setRArrowSymbol(byte x, byte y, byte b)
 {
+  /* limit input paramters */
+  if (x >= NUMBER_OF_PIXELS_PER_ROW) x = NUMBER_OF_PIXELS_PER_ROW - 1;
+  if (y >= NUMBER_OF_PIXELS_PER_COLUMN) y = NUMBER_OF_PIXELS_PER_COLUMN - 1;
+  if (b > MAX_BRIGHTNESS) b = MAX_BRIGHTNESS;
+
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
   byte temp = x;
@@ -536,7 +561,7 @@ void setRArrowSymbol(byte x, byte y, byte b)
   #endif
   
   // circle c = 0
-  struct symbol s = {(byte)(getNumberOfSymbols() + 1), false, (byte)(PICTURE_NAME_OFFSET + PICTURE_ARRAY_POS_RARROW), x, y, FONTWIDTH, FONTSIZE, b, NULL, NULL};
+  struct symbol s = {(byte)(getNumberOfSymbols() + 1), false, (byte)(PICTURE_NAME_OFFSET + PICTURE_ARRAY_POS_RARROW), x, y, FONTWIDTH_BIG, FONTSIZE_BIG, b, NULL, NULL};
   addSymbolTail(&s);
 }
 
@@ -546,13 +571,20 @@ void setRArrowSymbol(byte x, byte y, byte b)
  *
  * \requ    addSymbolTail()
  *
- * \param   (char) character
- *          (byte) x, y top left coordinate of the character
- *          (byte) brightness (0... MAX_BRIGHTNESS)
+ * \param   (uchar) character
+ *          (byte)  x, y top left coordinate of the character
+ *          (byte)  brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setBigNumberSymbol(char c, byte x, byte y, byte b)
+void setBigNumberSymbol(unsigned char c, byte x, byte y, byte b)
 {
+  /* limit input paramters */
+  if (c > '?') c = '?';
+  else if (c < ' ') c = ' ';
+  if (x >= NUMBER_OF_PIXELS_PER_ROW - FONTWIDTH_BIG) x = NUMBER_OF_PIXELS_PER_ROW - FONTWIDTH_BIG - 1;
+  if (y >= NUMBER_OF_PIXELS_PER_COLUMN - FONTSIZE_BIG) y = NUMBER_OF_PIXELS_PER_COLUMN - FONTSIZE_BIG - 1;
+  if (b > MAX_BRIGHTNESS) b = MAX_BRIGHTNESS;
+
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
   byte temp = x;
@@ -577,16 +609,21 @@ void setBigNumberSymbol(char c, byte x, byte y, byte b)
  *
  * \requ    setBigNumberSymbol(), drawSymbols()
  *
- * \param   (char[]) constant string (char array)
- *          (byte)   x, y top left coordinate of the string
- *          (byte)   brightness (0... MAX_BRIGHTNESS)
+ * \param   (uchar[]) constant string (char array)
+ *          (byte)    x, y top left coordinate of the string
+ *          (byte)    brightness (0... MAX_BRIGHTNESS)
  *          
  * \return  -
  ============================================================== */
-void drawBigNumbers(const char str[], byte x, byte y, byte b)
+void drawBigNumbers(const unsigned char str[], byte x, byte y, byte b)
 {  
   byte ofCnt = 0;  // overflow counter
   
+  /* limit input paramters */
+  if (x >= NUMBER_OF_PIXELS_PER_ROW - FONTWIDTH_BIG) x = NUMBER_OF_PIXELS_PER_ROW - FONTWIDTH_BIG - 1;
+  if (y >= NUMBER_OF_PIXELS_PER_COLUMN - FONTSIZE_BIG) y = NUMBER_OF_PIXELS_PER_COLUMN - FONTSIZE_BIG - 1;
+  if (b > MAX_BRIGHTNESS) b = MAX_BRIGHTNESS;
+
   for (unsigned int i = 0; str[i] != '\0'; i++)
   {     
     byte currentX = x + i * (FONTWIDTH_BIG - CHAR_SPACING_OFFSET_BIG);
@@ -619,13 +656,20 @@ void drawBigNumbers(const char str[], byte x, byte y, byte b)
  *
  * \requ    addSymbolTail()
  *
- * \param   (char) character
- *          (byte) x, y top left coordinate of the character
- *          (byte) brightness (0... MAX_BRIGHTNESS)
+ * \param   (uchar) character
+ *          (byte)  x, y top left coordinate of the character
+ *          (byte)  brightness (0... MAX_BRIGHTNESS)
  * \return  -
  ============================================================== */
-void setCharSymbol(char c, byte x, byte y, byte b)
+void setCharSymbol(unsigned char c, byte x, byte y, byte b)
 {
+  /* limit input paramters */
+  if (c > '~') c = ' ';
+  else if (c < ' ') c = ' ';
+  if (x >= NUMBER_OF_PIXELS_PER_ROW - FONTWIDTH) x = NUMBER_OF_PIXELS_PER_ROW - FONTWIDTH - 1;
+  if (y >= NUMBER_OF_PIXELS_PER_COLUMN - FONTSIZE) y = NUMBER_OF_PIXELS_PER_COLUMN - FONTSIZE - 1;
+  if (b > MAX_BRIGHTNESS) b = MAX_BRIGHTNESS;
+
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
   byte temp = x;
@@ -649,15 +693,20 @@ void setCharSymbol(char c, byte x, byte y, byte b)
  *
  * \requ    setCharSymbol(), drawSymbols()
  *
- * \param   (char[]) constant string (char array)
- *          (byte)   x, y top left coordinate of the string
- *          (byte)   brightness (0... MAX_BRIGHTNESS)
+ * \param   (uchar[]) constant string (char array)
+ *          (byte)    x, y top left coordinate of the string
+ *          (byte)    brightness (0... MAX_BRIGHTNESS)
  *          
  * \return  -
  ============================================================== */
-void drawString(const char str[], byte x, byte y, byte b)
+void drawString(const unsigned char str[], byte x, byte y, byte b)
 {  
   byte ofCnt = 0;  // overflow counter
+
+  /* limit input paramters */
+  if (x >= NUMBER_OF_PIXELS_PER_ROW - FONTWIDTH) x = NUMBER_OF_PIXELS_PER_ROW - FONTWIDTH - 1;
+  if (y >= NUMBER_OF_PIXELS_PER_COLUMN - FONTSIZE) y = NUMBER_OF_PIXELS_PER_COLUMN - FONTSIZE - 1;
+  if (b > MAX_BRIGHTNESS) b = MAX_BRIGHTNESS;
   
   for (unsigned int i = 0; str[i] != '\0'; i++)
   {     
@@ -696,7 +745,12 @@ void drawString(const char str[], byte x, byte y, byte b)
  * \return  -
  ============================================================== */
 void setCustomSymbol(byte x, byte y, byte b)
-{    
+{ 
+  /* limit input paramters */
+  if (x >= NUMBER_OF_PIXELS_PER_ROW - CUSTOM_SYMBOL_WIDTH) x = NUMBER_OF_PIXELS_PER_ROW - CUSTOM_SYMBOL_WIDTH - 1;
+  if (y >= NUMBER_OF_PIXELS_PER_COLUMN - CUSTOM_SYMBOL_SIZE) y = NUMBER_OF_PIXELS_PER_COLUMN - CUSTOM_SYMBOL_SIZE - 1;
+  if (b > MAX_BRIGHTNESS) b = MAX_BRIGHTNESS;
+
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
   byte temp = x;
@@ -1502,6 +1556,9 @@ byte getSymbolBrigthness(symbol *s) {return s -> b;}
  ============================================================== */
 void setSymbolBrightnesses(byte b)
 {
+  /* limit input paramters */
+  if (b > MAX_BRIGHTNESS) b = MAX_BRIGHTNESS;
+
   for (struct symbol *ptr = head; ptr != NULL; ptr = ptr -> next)
   {
     setSymbolBrightness(ptr, b);
@@ -1792,17 +1849,23 @@ void rotateCustomSymbolContentACW()
  * \return  -
  ============================================================== */
 void drawLine(int x0, int y0, int x1, int y1)
-{  
+{ 
   int dx = x1 - x0;
   int dy = y1 - y0;
   int dx_abs = abs(dx);
   int dy_abs = abs(dy);
   int s_dx = sgn(dx);
   int s_dy = sgn(dy);
-  int x = dy_abs >> 1;
-  int y = dx_abs >> 1;
   int px = x0;
   int py = y0;
+  int x, y;
+
+  /* limit input paramters */
+  if (dx_abs >= CUSTOM_SYMBOL_WIDTH) dx_abs = CUSTOM_SYMBOL_WIDTH - 1;
+  if (dy_abs >= CUSTOM_SYMBOL_SIZE) dy_abs = CUSTOM_SYMBOL_SIZE - 1;
+
+  x = dy_abs >> 1;  // dy_abs/2
+  y = dx_abs >> 1;  // dx_abs/2
 
   setPixel(x0, y0); // set first pixel
 
@@ -1929,7 +1992,7 @@ void drawFilledRectangle(byte x, byte y, byte l, byte h)
 }
 
 /** ===========================================================
- * \fn      drawCircleSymbol
+ * \fn      drawCircle
  * \brief   draws a circle on given coordinate with given
  *          radius into the customSymbol
  *
@@ -1939,7 +2002,7 @@ void drawFilledRectangle(byte x, byte y, byte l, byte h)
  *          (byte) radius of the circle
  * \return  -
  ============================================================== */
-void drawCircleSymbol(byte x0, byte y0, byte r)
+void drawCircle(byte x0, byte y0, byte r)
 {
   int f = 1 - r;
   int ddF_x = 1;
@@ -1978,7 +2041,7 @@ void drawCircleSymbol(byte x0, byte y0, byte r)
 }
 
 /** ===========================================================
- * \fn      drawFilledCircleSymbol
+ * \fn      drawFilledCircle
  * \brief   draws a filled circle on given coordinate with
  *          given radius into the customSymbol
  *
@@ -1988,13 +2051,13 @@ void drawCircleSymbol(byte x0, byte y0, byte r)
  *          (byte) radius of the circle
  * \return  -
  ============================================================== */
-void drawFilledCircleSymbol(byte x0, byte y0, byte r)
+void drawFilledCircle(byte x0, byte y0, byte r)
 {
-  int f = 1 - r;
-  int ddF_x = 1;
-  int ddF_y = -2 * r;
-  int x = 0;
-  int y = r;
+  int f = 1 - r;      //-9
+  int ddF_x = 1;      //1
+  int ddF_y = -2 * r; //-20
+  int x = 0;          //0
+  int y = r;          //10
 
   drawHLine(x0 - r, y0, 2 * r + 1);
 
@@ -2020,7 +2083,7 @@ void drawFilledCircleSymbol(byte x0, byte y0, byte r)
 }
 
 /** ===========================================================
- * \fn      drawTriangleSymbol
+ * \fn      drawTriangle
  * \brief   draws a triangle on given coordinates into the
  *          customSymbol
  *
@@ -2030,7 +2093,7 @@ void drawFilledCircleSymbol(byte x0, byte y0, byte r)
  *                corners
  * \return  -
  ============================================================== */
-void drawTriangleSymbol(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
+void drawTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
 {
   drawLine(x0, y0, x1, y1);
   drawLine(x0, y0, x2, y2);
@@ -2040,7 +2103,7 @@ void drawTriangleSymbol(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
 }
 
 /** ===========================================================
- * \fn      drawFilledTriangleSymbol
+ * \fn      drawFilledTriangle
  * \brief   draws a filled triangle on given coordinates into
  *          the customSymbol
  *          (uses the Bresenham's line-drawing algorithm)
@@ -2051,7 +2114,7 @@ void drawTriangleSymbol(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
  *                corners
  * \return  -
  ============================================================== */
-void drawFilledTriangleSymbol(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
+void drawFilledTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2)
 {
   /* do the same as in the drawLine() function but draw lines to
    the static corner x2,y2 instaed of single pixels */

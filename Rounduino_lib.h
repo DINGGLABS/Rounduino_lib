@@ -239,11 +239,11 @@ extern void setSquareSymbol(byte x, byte y, byte b);
 extern void setLArrowSymbol(byte x, byte y, byte b);
 extern void setRArrowSymbol(byte x, byte y, byte b);
 
-extern void setBigNumberSymbol(char c, byte x, byte y, byte b);
-extern void drawBigNumbers(const char str[], byte x, byte y, byte b);
+extern void setBigNumberSymbol(unsigned char c, byte x, byte y, byte b);
+extern void drawBigNumbers(const unsigned char str[], byte x, byte y, byte b);
 
-extern void setCharSymbol(char c, byte x, byte y, byte b);
-extern void drawString(const char str[], byte x, byte y, byte b);
+extern void setCharSymbol(unsigned char c, byte x, byte y, byte b);
+extern void drawString(const unsigned char str[], byte x, byte y, byte b);
 
 extern void setCustomSymbol(byte x, byte y, byte b);
 
@@ -308,10 +308,10 @@ extern void drawVLine(byte x, byte y, byte h);
 
 extern void drawRectangle(byte x, byte y, byte l, byte h);
 extern void drawFilledRectangle(byte x, byte y, byte l, byte h);
-extern void drawCircleSymbol(byte x0, byte y0, byte r);
-extern void drawFilledCircleSymbol(byte x0, byte y0, byte r);
-extern void drawTriangleSymbol(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2);
-extern void drawFilledTriangleSymbol(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2);
+extern void drawCircle(byte x0, byte y0, byte r);
+extern void drawFilledCircle(byte x0, byte y0, byte r);
+extern void drawTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2);
+extern void drawFilledTriangle(byte x0, byte y0, byte x1, byte y1, byte x2, byte y2);
 extern void drawRandomPattern(byte x0, byte y0, byte xr, byte yr);
 
 #ifdef DEBUGGING
