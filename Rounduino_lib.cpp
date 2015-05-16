@@ -410,17 +410,16 @@ void createCircleSymbol(byte x, byte y, byte b)
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
   byte temp = x;
-  x = NUMBER_OF_PIXELS_PER_COLUMN - y - FONTSIZE;
+  x = NUMBER_OF_PIXELS_PER_COLUMN - y - FONTSIZE_BIG;
   y = temp;
   #endif
   
   #ifdef ROTATED_ACW
   byte temp = y;
-  y = NUMBER_OF_PIXELS_PER_ROW - x - FONTWIDTH;
+  y = NUMBER_OF_PIXELS_PER_ROW - x - FONTWIDTH_BIG;
   x = temp;
   #endif
   
-  // circle c = 0
   struct symbol s = {(byte)(getNumberOfSymbols() + 1), false, (byte)(PICTURE_NAME_OFFSET + PICTURE_ARRAY_POS_CIRCLE), x, y, FONTWIDTH_BIG, FONTSIZE_BIG, b, NULL, NULL};
   addSymbolTail(&s);
 }
@@ -445,17 +444,16 @@ void createTriangleSymbol(byte x, byte y, byte b)
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
   byte temp = x;
-  x = NUMBER_OF_PIXELS_PER_COLUMN - y - FONTSIZE;
+  x = NUMBER_OF_PIXELS_PER_COLUMN - y - FONTSIZE_BIG;
   y = temp;
   #endif
   
   #ifdef ROTATED_ACW
   byte temp = y;
-  y = NUMBER_OF_PIXELS_PER_ROW - x - FONTWIDTH;
+  y = NUMBER_OF_PIXELS_PER_ROW - x - FONTWIDTH_BIG;
   x = temp;
   #endif
   
-  // circle c = 0
   struct symbol s = {(byte)(getNumberOfSymbols() + 1), false, (byte)(PICTURE_NAME_OFFSET + PICTURE_ARRAY_POS_TRIANGLE), x, y, FONTWIDTH_BIG, FONTSIZE_BIG, b, NULL, NULL};
   addSymbolTail(&s);
 }
@@ -480,17 +478,16 @@ void createSquareSymbol(byte x, byte y, byte b)
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
   byte temp = x;
-  x = NUMBER_OF_PIXELS_PER_COLUMN - y - FONTSIZE;
+  x = NUMBER_OF_PIXELS_PER_COLUMN - y - FONTSIZE_BIG;
   y = temp;
   #endif
   
   #ifdef ROTATED_ACW
   byte temp = y;
-  y = NUMBER_OF_PIXELS_PER_ROW - x - FONTWIDTH;
+  y = NUMBER_OF_PIXELS_PER_ROW - x - FONTWIDTH_BIG;
   x = temp;
   #endif
   
-  // circle c = 0
   struct symbol s = {(byte)(getNumberOfSymbols() + 1), false, (byte)(PICTURE_NAME_OFFSET + PICTURE_ARRAY_POS_SQUARE), x, y, FONTWIDTH_BIG, FONTSIZE_BIG, b, NULL, NULL};
   addSymbolTail(&s);
 }
@@ -515,17 +512,16 @@ void createLArrowSymbol(byte x, byte y, byte b)
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
   byte temp = x;
-  x = NUMBER_OF_PIXELS_PER_COLUMN - y - FONTSIZE;
+  x = NUMBER_OF_PIXELS_PER_COLUMN - y - FONTSIZE_BIG;
   y = temp;
   #endif
   
   #ifdef ROTATED_ACW
   byte temp = y;
-  y = NUMBER_OF_PIXELS_PER_ROW - x - FONTWIDTH;
+  y = NUMBER_OF_PIXELS_PER_ROW - x - FONTWIDTH_BIG;
   x = temp;
   #endif
   
-  // circle c = 0
   struct symbol s = {(byte)(getNumberOfSymbols() + 1), false, (byte)(PICTURE_NAME_OFFSET + PICTURE_ARRAY_POS_LARROW), x, y, FONTWIDTH_BIG, FONTSIZE_BIG, b, NULL, NULL};
   addSymbolTail(&s);
 }
@@ -550,17 +546,16 @@ void createRArrowSymbol(byte x, byte y, byte b)
   /* recalculate symbol position if rotated */
   #ifdef ROTATED_CW
   byte temp = x;
-  x = NUMBER_OF_PIXELS_PER_COLUMN - y - FONTSIZE;
+  x = NUMBER_OF_PIXELS_PER_COLUMN - y - FONTSIZE_BIG;
   y = temp;
   #endif
   
   #ifdef ROTATED_ACW
   byte temp = y;
-  y = NUMBER_OF_PIXELS_PER_ROW - x - FONTWIDTH;
+  y = NUMBER_OF_PIXELS_PER_ROW - x - FONTWIDTH_BIG;
   x = temp;
   #endif
   
-  // circle c = 0
   struct symbol s = {(byte)(getNumberOfSymbols() + 1), false, (byte)(PICTURE_NAME_OFFSET + PICTURE_ARRAY_POS_RARROW), x, y, FONTWIDTH_BIG, FONTSIZE_BIG, b, NULL, NULL};
   addSymbolTail(&s);
 }
@@ -640,10 +635,10 @@ void drawBigNumbers(const unsigned char str[], byte x, byte y, byte b)
     }
     
     //blup
-    if (i % 2 == 0)
-    {
+    // if (i % 2 == 0)
+    // {
       
-    }
+    // }
     createBigNumberSymbol((byte)str[i], currentX, y, b);
   }
 
@@ -725,10 +720,10 @@ void drawString(const unsigned char str[], byte x, byte y, byte b)
     }
     
     //blup
-    if (i % 2 == 0)
-    {
+    // if (i % 2 == 0)
+    // {
       
-    }
+    // }
     createCharSymbol((byte)str[i], currentX, y, b);
   }
 
@@ -1144,7 +1139,7 @@ static void deleteSymbol(struct symbol *s)
 
 /** ===========================================================
  * \fn      removeSymbol
- * \brief   removes a symbol in the symbol list
+ * \brief   removes a symbol from the symbol list
  *
  * \param   (*symbol) pointer on a symbol in the symbol list
  * \return  -
@@ -1244,7 +1239,7 @@ void removeSymbolTail()
 
 /** ===========================================================
  * \fn      clearSymbolList
- * \brief   deletes all symbols of the symbol list
+ * \brief   deletes all symbols in the symbol list
  *
  * \param   -
  * \return  -
@@ -1530,7 +1525,7 @@ void swapSymbolPositions(struct symbol *s1, struct symbol *s2)
 
 /* symbol parameter set-function */
 void setSymbolID(symbol *s, byte id) {s -> id = id; s -> dr = false;}
-void setSymbolDrawed(symbol *s, boolean dr) {s -> dr = dr;}
+void setSymbolDrawn(symbol *s, boolean dr) {s -> dr = dr;}
 void setSymbolName(symbol *s, byte c) {s -> c = c; s -> dr = false;}
 void setSymbolPosX(symbol *s, byte x) {s -> x = x; s -> dr = false;}
 void setSymbolPosY(symbol *s, byte y) {s -> y = y; s -> dr = false;}
@@ -1540,7 +1535,7 @@ void setSymbolBrightness(symbol *s, byte b) {s -> b = b; s -> dr = false;}
 
 /* symbol parameter get-function */
 byte getSymbolID(symbol *s) {return s -> id;}
-boolean getSymbolDrawed(symbol *s) {return s -> dr;}
+boolean getSymbolDrawn(symbol *s) {return s -> dr;}
 byte getSymbolName(symbol *s) {return s -> c;}
 byte getSymbolPosX(symbol *s) {return s -> x;}
 byte getSymbolPosY(symbol *s) {return s -> y;}
@@ -2267,7 +2262,7 @@ void showCustomSymbol()
  * \fn      drawSymbol
  * \brief   shows given symbol on the display
  *
- * \param   -
+ * \param   (*symbol) pointer on a symbol in the symbol list
  * \return  -
  ============================================================== */
 void drawSymbol(struct symbol *symbolPtr)
@@ -2308,7 +2303,7 @@ void drawSymbol(struct symbol *symbolPtr)
         else
         {
           /* picture */
-          interestingByte = pgm_read_byte(&(pictures[(symbolPtr -> c)][cy][cx]));
+          interestingByte = pgm_read_byte(&(pictures[(symbolPtr -> c) - PICTURE_NAME_OFFSET][cy][cx]));
         }
 
         /* decompress interesting byte and send data bytes */
@@ -2354,7 +2349,96 @@ void drawSymbol(struct symbol *symbolPtr)
 //    delay(DRAW_SYMBOL_DELAY);
 
     /* symbol has now been drawn */
-    (symbolPtr -> dr) = true;
+    symbolPtr -> dr = true;
+  }
+}
+
+/** ===========================================================
+ * \fn      eraseSymbol
+ * \brief   erases given Symbol from the display and removes it
+ *          from the symbol list if chosen
+ *
+ * \requ    drawSymbol()
+ *
+ * \param   (*symbol) pointer on a symbol in the symbol list
+ *          (bool)    true = delete from symbol list
+ * \return  -
+ ============================================================== */
+void eraseSymbol(struct symbol *symbolPtr, boolean b)
+{
+  /* check type of symbol to determine if it's big or not */
+  if (((symbolPtr -> c) >= ASCII_FIRST_CHARACTER_OFFSET) && ((symbolPtr -> c) < PICTURE_NAME_OFFSET))
+  {
+    /* recalculate symbol position if rotated */
+    #ifdef ROTATED_CW
+    byte temp = symbolPtr -> y;
+    symbolPtr -> y = NUMBER_OF_PIXELS_PER_ROW - symbolPtr -> x - FONTWIDTH;
+    symbolPtr -> x = temp;
+    #endif
+    
+    #ifdef ROTATED_ACW
+    byte temp = symbolPtr -> x;
+    symbolPtr -> x = NUMBER_OF_PIXELS_PER_COLUMN - symbolPtr -> y - FONTSIZE;
+    symbolPtr -> y = temp;
+    #endif
+
+    createCharSymbol(' ', symbolPtr -> x, symbolPtr -> y, symbolPtr -> b);
+  }
+  else
+  {
+    /* recalculate symbol position if rotated */
+    #ifdef ROTATED_CW
+    byte temp = symbolPtr -> y;
+    symbolPtr -> y = NUMBER_OF_PIXELS_PER_ROW - symbolPtr -> x - FONTWIDTH_BIG;
+    symbolPtr -> x = temp;
+    #endif
+    
+    #ifdef ROTATED_ACW
+    byte temp = symbolPtr -> x;
+    symbolPtr -> x = NUMBER_OF_PIXELS_PER_COLUMN - symbolPtr -> y - FONTSIZE_BIG;
+    symbolPtr -> y = temp;
+    #endif
+    createBigNumberSymbol(' ', symbolPtr -> x, symbolPtr -> y, symbolPtr -> b);
+  }
+
+  drawSymbol(tail);
+  removeSymbolTail();             // remove empty symbol
+
+  if (b) removeSymbol(symbolPtr); // remove symbol from symbol list
+  else symbolPtr -> dr = false;
+}
+
+/** ===========================================================
+ * \fn      drawCustomSymbol
+ * \brief   shows the customSymbol on the display if existing
+ *
+ * \requ    drawSymbol(), getCustomSymbol()
+ *
+ * \param   -
+ * \return  -
+ ============================================================== */
+void drawCustomSymbol()
+{ 
+  struct symbol *cs = getCustomSymbol();
+  if (cs != NULL) drawSymbol(cs);
+}
+
+/** ===========================================================
+ * \fn      eraseCustomSymbol
+ * \brief   erases the customSymbol from the display if
+ *          existing
+ *
+ * \requ    drawSymbol(), getCustomSymbol()
+ *
+ * \param   -
+ * \return  -
+ ============================================================== */
+void eraseCustomSymbol()
+{ 
+  struct symbol *cs = getCustomSymbol();
+  if (cs != NULL)
+  {
+    eraseSymbol(cs, true);
   }
 }
 
@@ -2372,22 +2456,9 @@ void drawSymbols()
   /* run through whole linked symbol list */
   for (struct symbol *symbolPtr = head; symbolPtr != NULL; symbolPtr = symbolPtr -> next)
   { 
+    /* head will be drawn first and will therefore lay lowermost */
     drawSymbol(symbolPtr);
   }
-}
-
-/** ===========================================================
- * \fn      drawCustomSymbol
- * \brief   shows the customSymbol on the display if existing
- *
- * \requ    drawSymbol(), getCustomSymbol()
- *
- * \param   -
- * \return  -
- ============================================================== */
-void drawCustomSymbol()
-{
-  if (getCustomSymbol() != NULL) drawSymbol(getCustomSymbol());
 }
 
 /** ===========================================================
@@ -2405,7 +2476,7 @@ void redrawSymbols()
   /* run through whole linked symbol list */
   for (struct symbol *symbolPtr = head; symbolPtr != NULL; symbolPtr = symbolPtr -> next)
   { 
-    /* reset drawed boolean */
+    /* reset drawn boolean */
     symbolPtr -> dr = false;
   }
   
@@ -2768,13 +2839,13 @@ static void setDisplayAddress(int x, int y)
 
   /* set column address */
   writeCommand(0x15);
-  writeCommand(x);                                   // start adr.
-  writeCommand(NUMBER_OF_PIXELS_PER_COLUMN / 2 - 1);   // end adr.
+  writeCommand(x);                                    // start adr.
+  writeCommand(NUMBER_OF_PIXELS_PER_COLUMN / 2 - 1);  // end adr.
 
   /* set row address */
   writeCommand(0x75);
-  writeCommand(y);                                   // start adr.
-  writeCommand(NUMBER_OF_PIXELS_PER_ROW - 1);          // end adr.
+  writeCommand(y);                                    // start adr.
+  writeCommand(NUMBER_OF_PIXELS_PER_ROW - 1);         // end adr.
 }
 
 /** ===========================================================
@@ -2797,13 +2868,13 @@ static void setDisplayAddress(int x, int x_, int y, int y_)
 
   /* set column address */
   writeCommand(0x15);
-  writeCommand(x);                                   // start adr.
-  writeCommand(x_);   // end adr.
+  writeCommand(x);  // start adr.
+  writeCommand(x_); // end adr.
 
   /* set row address */
   writeCommand(0x75);
-  writeCommand(y);                                   // start adr.
-  writeCommand(y_);          // end adr.
+  writeCommand(y);  // start adr.
+  writeCommand(y_); // end adr.
 }
 
 /** ===========================================================
