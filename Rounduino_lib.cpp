@@ -1731,9 +1731,9 @@ void rotateCustomSymbolContentCW()
   byte currentX, currentY, newX, newY;
   const byte maxXY = (CUSTOM_SYMBOL_SIZE - 1);
 
-  for (int y = 0 ; y < CUSTOM_SYMBOL_SIZE / 2; y++)
+  for (int y = 0 ; y < CUSTOM_SYMBOL_SIZE >> 1; y++) // '>> 1' corresponds '/2'
   {
-    for (int x = 0 ; x < CUSTOM_SYMBOL_WIDTH / 2; x++)
+    for (int x = 0 ; x < CUSTOM_SYMBOL_WIDTH >> 1; x++) // '>> 1' corresponds '/2'
     { 
       pixelA = getPixel(x, y);
 
@@ -1793,9 +1793,9 @@ void rotateCustomSymbolContentACW()
   byte currentX, currentY, newX, newY;
   const byte maxXY = (CUSTOM_SYMBOL_SIZE - 1);
 
-  for (int y = 0 ; y < CUSTOM_SYMBOL_SIZE / 2; y++)
+  for (int y = 0 ; y < CUSTOM_SYMBOL_SIZE >> 1; y++) // '>> 1' corresponds '/2'
   {
-    for (int x = 0 ; x < CUSTOM_SYMBOL_WIDTH / 2; x++)
+    for (int x = 0 ; x < CUSTOM_SYMBOL_WIDTH >> 1; x++) // '>> 1' corresponds '/2'
     { 
       pixelA = getPixel(x, y);
 
@@ -2267,10 +2267,13 @@ void showCustomSymbol()
  ============================================================== */
 void drawSymbol(struct symbol *symbolPtr)
 {
-/* VARIANT 1 -> every row seperately */
-//   byte cy, mask;
+  clearBit(CS_PORT, CS_PIN);
+
+/* VARIANT 1 -> get a row before decompressing */
+//   byte cx, cy, mask;
 //   boolean firstPixelFlag = true;
-//   byte currentRow[FONTWIDTH_BIG / NUMBER_OF_PIXELS_PER_BYTE];
+//   byte numberOfBytesPerRow = (symbolPtr -> w) / NUMBER_OF_PIXELS_PER_BYTE;
+//   byte currentRowByte[numberOfBytesPerRow];
 //   byte data = 0;
   
 //   /* check if symbols has not be drawn yet */
@@ -2283,64 +2286,68 @@ void drawSymbol(struct symbol *symbolPtr)
 //       if ((symbolPtr -> c) < ASCII_FIRST_CHARACTER_OFFSET)
 //       {
 //         /* 32 bit ASCII number */
-//         memcpy(currentRow, &(numbers[(symbolPtr -> c)][cy][0]), FONTWIDTH_BIG / NUMBER_OF_PIXELS_PER_BYTE);   
+//         memcpy_P(currentRowByte, &(numbers[(symbolPtr -> c)][cy][0]), numberOfBytesPerRow);   
 //       }
 //       else if ((symbolPtr -> c) < PICTURE_NAME_OFFSET)
 //       {
 //         /* 16 bit ASCII character */
-//         memcpy(currentRow, &(characters[(symbolPtr -> c) - ASCII_FIRST_CHARACTER_OFFSET][cy][0]), FONTWIDTH_BIG / NUMBER_OF_PIXELS_PER_BYTE);
+//         memcpy_P(currentRowByte, &(characters[(symbolPtr -> c) - ASCII_FIRST_CHARACTER_OFFSET][cy][0]), numberOfBytesPerRow);
 //       }
 //       else if ((symbolPtr -> c) == CUSTOM_SYMBOL_NAME_OFFSET)
 //       {
 //         /* customSymbol */
-//         memcpy(currentRow, customSymbol[cy], FONTWIDTH_BIG / NUMBER_OF_PIXELS_PER_BYTE);
+//         memcpy(currentRowByte, customSymbol[cy], numberOfBytesPerRow);
 //       }
 //       else
 //       {
 //         /* picture */
-//         memcpy(currentRow, &(pictures[(symbolPtr -> c) - PICTURE_NAME_OFFSET][cy][0]), FONTWIDTH_BIG / NUMBER_OF_PIXELS_PER_BYTE);
+//         memcpy_P(currentRowByte, &(pictures[(symbolPtr -> c) - PICTURE_NAME_OFFSET][cy][0]), numberOfBytesPerRow);
 //       }
 
 //       /* set current byte address */
-//       setDisplayAddress((symbolPtr -> x) >> 1, (symbolPtr -> y) + cy);    // '>> 1' corresponds '/2'
+//       setDisplayAddress((symbolPtr -> x) >> 1, (symbolPtr -> y) + cy);  // '>> 1' corresponds '/2'
 
-//       /* decompress interesting byte and send data bytes */
-//       for (mask = (1 << (NUMBER_OF_PIXELS_PER_BYTE - 1)); mask > 0; mask = mask >> NUMBER_OF_BITS_PER_PIXEL)
-//       //for (mask = 0b10000000; mask > 0; mask = mask >> 1)
+//       /* run through every byte within a symbol */
+//       for (cx = 0; cx < numberOfBytesPerRow; cx++)
 //       { 
-//         /* send a byte every second pixel (defined by the display controller (SSD1329)) */
-//         if (!firstPixelFlag)  // ...second pixel
-//         {
-//           /* check current bit */
-//           if((currentRow[cy] & mask) > 0)
+//         /* decompress interesting byte and send data bytes */
+//         for (mask = (1 << (NUMBER_OF_PIXELS_PER_BYTE - 1)); mask > 0; mask = mask >> NUMBER_OF_BITS_PER_PIXEL)
+//         //for (mask = 0b10000000; mask > 0; mask = mask >> 1)
+//         { 
+//           /* send a byte every second pixel (defined by the display controller (SSD1329)) */
+//           if (!firstPixelFlag)  // ...second pixel
 //           {
-//             /* combine both nibbles */
-//             data |= (symbolPtr -> b);
+//             /* check current bit */
+//             if((currentRowByte[cx] & mask) > 0)
+//             {
+//               /* combine both nibbles */
+//               data |= (symbolPtr -> b);
+//             }
+            
+//             /* send data byte */
+//             writeData(data);
+            
+//             /* reset data byte */
+//             data = 0;
+//           }
+//           else  // ...first pixel
+//           {
+//             /* check current bit */
+//             if((currentRowByte[cx] & mask) > 0)
+//             {
+//               /* cache first nibble */
+//               data = (symbolPtr -> b) << 4;
+//             }
 //           }
           
-//           /* send data byte */
-//           writeData(data);
-          
-//           /* reset data byte */
-//           data = 0;
-//         }
-//         else  // ...first pixel
-//         {
-//           /* check current bit */
-//           if((currentRow[cy] & mask) > 0)
-//           {
-//             /* cache first nibble */
-//             data = (symbolPtr -> b) << 4;
-//           }
-//         }
+//           /* toggle first pixel flag */
+//           firstPixelFlag = !firstPixelFlag;
+//         } // ...end of mask-loop
         
-//         /* toggle first pixel flag */
-//         firstPixelFlag = !firstPixelFlag;
-//       } // ...end of mask-loop
-      
-//       /* reset interesting byte */
-//       currentRow[cy] = 0;
-      
+//         /* reset interesting byte */
+//         currentRowByte[cx] = 0;
+
+//       } // ...end of cx-loop
 //     } // ...end of cy-loop
     
 // //    delay(DRAW_SYMBOL_DELAY);
@@ -2351,9 +2358,10 @@ void drawSymbol(struct symbol *symbolPtr)
 
 
 
-/* VARIANT 2 -> every byte seperately */
-  byte interestingByte = 0;
+/* VARIANT 2 -> get only one byte before decompressing */
   byte cy, cx, mask;
+  byte numberOfBytesPerRow = (symbolPtr -> w) / NUMBER_OF_PIXELS_PER_BYTE;
+  byte interestingByte = 0;
   boolean firstPixelFlag = true;
   byte data = 0;
   
@@ -2364,10 +2372,10 @@ void drawSymbol(struct symbol *symbolPtr)
     for (cy = 0; cy < (symbolPtr -> h); cy++)
     {
       /* set current byte address */
-      setDisplayAddress((symbolPtr -> x) / 2, (symbolPtr -> y) + cy);
+      setDisplayAddress((symbolPtr -> x) >> 1, (symbolPtr -> y) + cy);  // '>> 1' corresponds '/2'
       
       /* run through every byte within a symbol */
-      for (cx = 0; cx < (symbolPtr -> w) / NUMBER_OF_PIXELS_PER_BYTE; cx++)
+      for (cx = 0; cx < numberOfBytesPerRow; cx++)
       {        
         /* check type of symbol and get current interesting byte */
         if ((symbolPtr -> c) < ASCII_FIRST_CHARACTER_OFFSET)
@@ -2435,7 +2443,10 @@ void drawSymbol(struct symbol *symbolPtr)
 
     /* symbol has now been drawn */
     symbolPtr -> dr = true;
-  }
+ }
+
+
+  setBit(CS_PORT, CS_PIN);
 }
 
 /** ===========================================================
@@ -2581,15 +2592,17 @@ void fillDisplay()
   Serial.println("fill display");
   #endif
 
+  clearBit(CS_PORT, CS_PIN);
   setDisplayAddress(0, 0);
 
   for (int y = 0; y < NUMBER_OF_PIXELS_PER_COLUMN; y++)
   {
-    for (int x = 0; x < NUMBER_OF_PIXELS_PER_ROW / 2; x++)
+    for (int x = 0; x < NUMBER_OF_PIXELS_PER_ROW >> 1; x++) // '>> 1' corresponds '/2'
     {
       writeData(0xFF);
     }
   }
+  setBit(CS_PORT, CS_PIN);
 }
 
 /** ===========================================================
@@ -2605,15 +2618,17 @@ void clearDisplay()
   Serial.println("clear display");
   #endif
   
+  clearBit(CS_PORT, CS_PIN);
   setDisplayAddress(0, 0);
 
   for (int y = 0; y < NUMBER_OF_PIXELS_PER_COLUMN; y++)
   {
-    for (int x = 0; x < NUMBER_OF_PIXELS_PER_ROW / 2; x++)
+    for (int x = 0; x < NUMBER_OF_PIXELS_PER_ROW >> 1; x++) // '>> 1' corresponds '/2'
     {
       writeData(0);
     }
   }
+  setBit(CS_PORT, CS_PIN);
 }
 
 /* functions to handle the display ---------------------------- */
@@ -2630,7 +2645,7 @@ static void initDisplay()
   #ifdef DEBUGGING
   Serial.println("start init");
   #endif
-  
+
   //Startup sequence
   displayStartup();
     
@@ -2641,6 +2656,7 @@ static void initDisplay()
   stopScroll();
 
   //Set Display Address
+  clearBit(CS_PORT, CS_PIN);
   setDisplayAddress(0, 0);
 
   //Set Contrast Current
@@ -2711,6 +2727,8 @@ static void initDisplay()
 
   //DISPLAY ON
   displayOn();
+
+  // setBit(CS_PORT, CS_PIN); // CS has been disabled in the displayOn()-function
 }
 
 /** ===========================================================
@@ -2769,7 +2787,9 @@ void displaySleep(boolean y)
  ============================================================== */
 void displayInvert()
 {
+  clearBit(CS_PORT, CS_PIN);
   writeCommand(0xA7);
+  setBit(CS_PORT, CS_PIN);
 }
 /** ===========================================================
  * \fn      displayNormal
@@ -2777,7 +2797,9 @@ void displayInvert()
  ============================================================== */
 void displayNormal()
 {
+  clearBit(CS_PORT, CS_PIN);
   writeCommand(0xA4);
+  setBit(CS_PORT, CS_PIN);
 }
 
 /** ===========================================================
@@ -2792,7 +2814,11 @@ void displayOn()
   
 //  digitalWrite(EN_BOOST, HIGH); 
 //  delay(100);
+
+  clearBit(CS_PORT, CS_PIN);
   writeCommand(0xAF);
+  setBit(CS_PORT, CS_PIN);
+
   delay(1);
 }
 
@@ -2806,7 +2832,10 @@ void displayOff()
   Serial.println("display off");
   #endif
   
+  clearBit(CS_PORT, CS_PIN);
   writeCommand(0xAE);
+  setBit(CS_PORT, CS_PIN);
+
   delay(1);
 //  digitalWrite(EN_BOOST, LOW);
 //  delay(100);
@@ -2821,8 +2850,10 @@ void displayOff()
  ============================================================== */
 void displaySetContrast(byte contrast)
 {
+  clearBit(CS_PORT, CS_PIN);
   writeCommand(0x81);
   writeCommand(contrast);
+  setBit(CS_PORT, CS_PIN);
 }
 
 /** ===========================================================
@@ -2837,6 +2868,7 @@ void displaySetContrast(byte contrast)
  ============================================================== */
 void startHScroll(byte startScrollAdr, byte endScrollAdr, byte stepWidth)
 {
+  clearBit(CS_PORT, CS_PIN);
   writeCommand(0x26);             // continous scroll
   writeCommand(stepWidth);        // horizontal scroll by x column (0... 63)
   writeCommand(startScrollAdr);   // start row address (0... 127)
@@ -2844,6 +2876,7 @@ void startHScroll(byte startScrollAdr, byte endScrollAdr, byte stepWidth)
   writeCommand(endScrollAdr);     // end row address (0... 127)
   writeCommand(0);                // no vertical scroll
   writeCommand(0x2F);             // activate scrolling
+  setBit(CS_PORT, CS_PIN);
 }
 
 /** ===========================================================
@@ -2858,6 +2891,7 @@ void startHScroll(byte startScrollAdr, byte endScrollAdr, byte stepWidth)
  ============================================================== */
 void startVScroll(byte startScrollAdr, byte endScrollAdr, byte stepWidth)
 { // startScrollAdr + endScrollAdr <= 128
+  clearBit(CS_PORT, CS_PIN);
   writeCommand(0x26);             // continous scroll
   writeCommand(0);                // no horizontal scroll
   writeCommand(startScrollAdr);   // start row address (0... 127)
@@ -2865,6 +2899,7 @@ void startVScroll(byte startScrollAdr, byte endScrollAdr, byte stepWidth)
   writeCommand(endScrollAdr);     // end row address (0... 127)
   writeCommand(stepWidth);        // vertical scroll by x row (0... 63)
   writeCommand(0x2F);             // activate scrolling
+  setBit(CS_PORT, CS_PIN);
 }
 
 /** ===========================================================
@@ -2879,6 +2914,7 @@ void startVScroll(byte startScrollAdr, byte endScrollAdr, byte stepWidth)
  ============================================================== */
 void startDScroll(byte startScrollAdr, byte endScrollAdr, byte stepWidth)
 { // startScrollAdr + endScrollAdr <= 128
+  clearBit(CS_PORT, CS_PIN);
   writeCommand(0x26);             // horizontal scroll
   writeCommand(stepWidth);        // horizontal scroll by x column (0... 63)
   writeCommand(startScrollAdr);   // start row address (0... 127)
@@ -2886,6 +2922,7 @@ void startDScroll(byte startScrollAdr, byte endScrollAdr, byte stepWidth)
   writeCommand(endScrollAdr);     // end row address (0... 127)
   writeCommand(stepWidth);        // vertical scroll by x row (0... 63)
   writeCommand(0x2F);             // activate scrolling
+  setBit(CS_PORT, CS_PIN);
 }
 
 /** ===========================================================
@@ -2897,13 +2934,16 @@ void startDScroll(byte startScrollAdr, byte endScrollAdr, byte stepWidth)
  ============================================================== */
 void stopScroll()
 {
+  clearBit(CS_PORT, CS_PIN);
   writeCommand(0x2E);            // deactivate scrolling
+  setBit(CS_PORT, CS_PIN);
 }
 
 /** ===========================================================
  * \fn      setDisplayAddress
  * \brief   sets the address of the columne (x) and the row (y)
  *          (the end address is always the maximum)
+ *          ATTENTION: CS-pin have to be enabled beforehand!
  *
  * \param   (int) x = column (0... 63)
  *          (int) y = row (0... 127)
@@ -2925,7 +2965,7 @@ static void setDisplayAddress(int x, int y)
   /* set column address */
   writeCommand(0x15);
   writeCommand(x);                                    // start adr.
-  writeCommand(NUMBER_OF_PIXELS_PER_COLUMN / 2 - 1);  // end adr.
+  writeCommand((NUMBER_OF_PIXELS_PER_COLUMN >> 1) - 1);  // end adr. ('>> 1' corresponds '/2')
 
   /* set row address */
   writeCommand(0x75);
@@ -2937,6 +2977,7 @@ static void setDisplayAddress(int x, int y)
  * \fn      setDisplayAddress
  * \brief   sets the start and the end address of the
  *          columne (x) and the row (y)
+ *          ATTENTION: CS-pin have to be enabled beforehand!
  *
  * \param   (int) x = start column (0... 63)
  *          (int) x_ = end column (0... 63)
@@ -2986,7 +3027,7 @@ static void writeCommand(byte command)
  ============================================================== */
 static void writeData(byte data)
 {
-//  digitalWrite(D_C, HIGH);    // D/C = 1 -> write data (automatic address increment)
+  //digitalWrite(D_C, HIGH);    // D/C = 1 -> write data (automatic address increment)
   setBit(D_C_PORT, D_C_PIN);
 
   writeByte(data);
@@ -3003,9 +3044,9 @@ static void writeData(byte data)
 static void writeByte(byte byteValue)
 {
   /* HW SPI (~250ns) */
-  clearBit(CS_PORT, CS_PIN);      // reset chip select pin PB0 (OLED display enabled)
+  // clearBit(CS_PORT, CS_PIN);      // reset chip select pin PB0 (OLED display enabled)
   SPI.transfer(byteValue);
-  setBit(CS_PORT, CS_PIN);        // set chip select pin PB0 (OLED display disabled)
+  // setBit(CS_PORT, CS_PIN);        // set chip select pin PB0 (OLED display disabled)
 }
 
 /* function to handle the buttons ----------------------------- */
