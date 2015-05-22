@@ -2692,19 +2692,20 @@ static void initDisplay()
 
   //Set MUX Radio
   writeCommand(0xA8);
-  writeCommand(0x7F);    // 127 (max)
+  writeCommand(0x7F);    // (0x0F... 7F (default)) 
 
   //Set first pre_charge phase length
   writeCommand(0xB1);
-  writeCommand(0x53);    // default
+  writeCommand(0x53);    // 0x53 = default
 
   //Set Frame Frequency (DCLKs per ROW)
   writeCommand(0xB2);
-  writeCommand(0x23);    // (0x14... 4E)
+  writeCommand(0x23);    // (0x14... 4E) 0x23 = default
 
   //Set Front Clock Divider/Oscillator Frequency
   writeCommand(0xB3);
-  writeCommand(0x51);    // 5 -> (500kHz / 5) and 1 -> divided by 2
+  writeCommand(0x00);    // default: 0h -> (500kHz / D) and 0l -> D = 1
+                         // higher means faster but also higher current consumption
 
   //Set Default Gray Scale table
   writeCommand(0xB7);
