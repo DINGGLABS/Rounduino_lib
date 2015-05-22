@@ -56,22 +56,22 @@ ISR(INT3_vect);
 ISR(INT6_vect);
 ISR(TIMER3_COMPA_vect);  // piezo interrupt handler
 
-static void initTimerInterrupt_CTC_0();
-static void initTimerInterrupt_CTC_1();
+// static void initTimerInterrupt_CTC_0();
+// static void initTimerInterrupt_CTC_1();
 static void initTimerInterrupt_CTC_3(); // piezo interrupt initialization
 
 /* functions to manipulate the symbols in the symbol list */
 static struct symbol *addSymbol(struct symbol *s);
-static void addSymbolHead(struct symbol *s);
+// static void addSymbolHead(struct symbol *s);
 static void addSymbolTail(struct symbol *s);
 static void addSymbolInFront(struct symbol *s1, struct symbol *s2);
-static void addSymbolBehind(struct symbol *s1, struct symbol *s2);
+// static void addSymbolBehind(struct symbol *s1, struct symbol *s2);
 
 static struct symbol *popSymbol(struct symbol *s);
-static struct symbol *popSymbolHead(void);
-static struct symbol *popSymbolTail(void);
+// static struct symbol *popSymbolHead(void);
+// static struct symbol *popSymbolTail(void);
 
-static void putSymbolHead(struct symbol *s);
+// static void putSymbolHead(struct symbol *s);
 static void putSymbolTail(struct symbol *s);
 static void putSymbolInFront(struct symbol *s1, struct symbol *s2);
 static void putSymbolBehind(struct symbol *s1, struct symbol *s2);
@@ -92,7 +92,7 @@ static void initDisplay();
 static void displayStartup();
 
 static void setDisplayAddress(int x, int y);
-static void setDisplayAddress(int x, int x_, int y, int y_);
+//static void setDisplayAddress(int x, int x_, int y, int y_);
 static void writeCommand(byte command);
 static void writeData(byte data);
 static void writeByte(byte byteValue);
@@ -332,18 +332,18 @@ ISR(TIMER3_COMPA_vect)
 * \param   -
 * \return  -
 ============================================================== */
-static void initTimerInterrupt_CTC_0()
-{
- /* init timer0 and releated interrupt (t_isr = 1/(8MHz/(prescaler*cnt))) */
- TCCR0A = (1 << WGM01);      // enable CTC (Clear Timer on Compare match) mode
- TCCR0B = 0x02;              // prescaler = 8 (0x01 -> /1, 0x02 -> /8, 0x03 -> /64, ...)
+// static void initTimerInterrupt_CTC_0()
+// {
+//  /* init timer0 and releated interrupt (t_isr = 1/(8MHz/(prescaler*cnt))) */
+//  TCCR0A = (1 << WGM01);      // enable CTC (Clear Timer on Compare match) mode
+//  TCCR0B = 0x02;              // prescaler = 8 (0x01 -> /1, 0x02 -> /8, 0x03 -> /64, ...)
    
- TIMSK0 = (1 << OCIE0A);     // set bit 1 to enable timer0 output compare match A interrupt (TIMER0_COMPA)
- OCR0A = INTERRUPT_FREQUENCY_DIVISOR_0;  // define output compare register A value (0... 255)
+//  TIMSK0 = (1 << OCIE0A);     // set bit 1 to enable timer0 output compare match A interrupt (TIMER0_COMPA)
+//  OCR0A = INTERRUPT_FREQUENCY_DIVISOR_0;  // define output compare register A value (0... 255)
 
- /* reset timer 0 counter register */
- TCNT0 = 0x00;
-}
+//  /* reset timer 0 counter register */
+//  TCNT0 = 0x00;
+// }
 
 /** ===========================================================
 * \fn      initTimerInterrupt_CTC_1
@@ -354,18 +354,18 @@ static void initTimerInterrupt_CTC_0()
 * \param   -
 * \return  -
 ============================================================== */
-static void initTimerInterrupt_CTC_1()
-{
- /* init timer1 and releated interrupt (t_isr = 1/(8MHz/(prescaler*cnt))) */
- TCCR1A = 0x00;         // enable CTC (Clear Timer on Compare match) mode
- TCCR1B = ((1 << WGM12) | 0x02);  // prescaler = 8 (0x01 -> /1, 0x02 -> /8, 0x03 -> /64, ...)
+// static void initTimerInterrupt_CTC_1()
+// {
+//  /* init timer1 and releated interrupt (t_isr = 1/(8MHz/(prescaler*cnt))) */
+//  TCCR1A = 0x00;         // enable CTC (Clear Timer on Compare match) mode
+//  TCCR1B = ((1 << WGM12) | 0x02);  // prescaler = 8 (0x01 -> /1, 0x02 -> /8, 0x03 -> /64, ...)
    
- TIMSK1 = (1 << OCIE1A);     // set bit 1 to enable timer1 output compare match A interrupt (TIMER1_COMPA)
- OCR1A = INTERRUPT_FREQUENCY_DIVISOR_1;  // define output compare register A value (0... 65535)
+//  TIMSK1 = (1 << OCIE1A);     // set bit 1 to enable timer1 output compare match A interrupt (TIMER1_COMPA)
+//  OCR1A = INTERRUPT_FREQUENCY_DIVISOR_1;  // define output compare register A value (0... 65535)
 
- /* reset timer 1 counter register */
- TCNT1 = 0x00;
-}
+//  /* reset timer 1 counter register */
+//  TCNT1 = 0x00;
+// }
 
 /** ===========================================================
  * \fn      initTimerInterrupt_CTC_3
@@ -809,13 +809,13 @@ static struct symbol *addSymbol(struct symbol *s)
  * \param   (*symbol) pointer on a symbol
  * \return  -
  ============================================================== */
-static void addSymbolHead(struct symbol *s)
-{
-  /* add s in the symbol list */
-  struct symbol *s_ = addSymbol(s);
+// static void addSymbolHead(struct symbol *s)
+// {
+//   /* add s in the symbol list */
+//   struct symbol *s_ = addSymbol(s);
   
-  putSymbolHead(s_);
-}
+//   putSymbolHead(s_);
+// }
 
 /** ===========================================================
  * \fn      addSymbolTail
@@ -871,26 +871,26 @@ static void addSymbolInFront(struct symbol *s1, struct symbol *s2)
  *          (*symbol) pointer on a symbol in the symbol list
  * \return  -
  ============================================================== */
-static void addSymbolBehind(struct symbol *s1, struct symbol *s2)
-{
-  /* add s1 in the symbol list */
-  struct symbol *s1_ = addSymbol(s1);
+// static void addSymbolBehind(struct symbol *s1, struct symbol *s2)
+// {
+//   /* add s1 in the symbol list */
+//   struct symbol *s1_ = addSymbol(s1);
     
-  /* check if s2 is tail */
-  if (s2 == tail)
-  {
-    tail = s1_;
-    s1_ -> next = NULL;
-  }
-  else
-  {
-    (s2 -> next) -> prev = s1_;
-    s1_ -> next = (s2 -> next);
-  }
+//   /* check if s2 is tail */
+//   if (s2 == tail)
+//   {
+//     tail = s1_;
+//     s1_ -> next = NULL;
+//   }
+//   else
+//   {
+//     (s2 -> next) -> prev = s1_;
+//     s1_ -> next = (s2 -> next);
+//   }
   
-  s1_ -> prev = s2;
-  s2 -> next = s1_;
-}
+//   s1_ -> prev = s2;
+//   s2 -> next = s1_;
+// }
 
 /** ===========================================================
  * \fn      popSymbol
@@ -947,22 +947,22 @@ static struct symbol *popSymbol(struct symbol *s)
  * \param   -
  * \return  (*symbol) pointer on taken symbol
  ============================================================== */
-static struct symbol *popSymbolHead()
-{ 
-  struct symbol *ptr = NULL;
+// static struct symbol *popSymbolHead()
+// { 
+//   struct symbol *ptr = NULL;
   
-  /* check if the list is not empty */
-  if (head != NULL)
-  {
-    ptr = head;
-    head = head -> next;
+//   /* check if the list is not empty */
+//   if (head != NULL)
+//   {
+//     ptr = head;
+//     head = head -> next;
     
-    if (head == NULL) tail = NULL;
-    else head -> prev = NULL;
-  }
+//     if (head == NULL) tail = NULL;
+//     else head -> prev = NULL;
+//   }
   
-  return ptr;
-}
+//   return ptr;
+// }
 
 /** ===========================================================
  * \fn      popSymbolTail
@@ -973,22 +973,22 @@ static struct symbol *popSymbolHead()
  * \param   -
  * \return  (*symbol) pointer on taken symbol
  ============================================================== */
-static struct symbol *popSymbolTail()
-{   
-  struct symbol *ptr = NULL;
+// static struct symbol *popSymbolTail()
+// {   
+//   struct symbol *ptr = NULL;
   
-  /* check if the list is not empty */
-  if (tail != NULL)
-  {
-    ptr = tail;
-    tail = tail -> prev;
+//   /* check if the list is not empty */
+//   if (tail != NULL)
+//   {
+//     ptr = tail;
+//     tail = tail -> prev;
     
-    if (tail == NULL) head = NULL;
-    else tail -> next = NULL;
-  }
+//     if (tail == NULL) head = NULL;
+//     else tail -> next = NULL;
+//   }
   
-  return ptr;
-}
+//   return ptr;
+// }
 
 /** ===========================================================
  * \fn      putSymbolHead
@@ -997,16 +997,16 @@ static struct symbol *popSymbolTail()
  * \param   (*symbol) pointer on a symbol in the symbol list
  * \return  -
  ============================================================== */
-static void putSymbolHead(struct symbol *s)
-{
-  /* check if the list is empty */
-  if (head == NULL) tail = s;
-  else head -> prev = s;
+// static void putSymbolHead(struct symbol *s)
+// {
+//   /* check if the list is empty */
+//   if (head == NULL) tail = s;
+//   else head -> prev = s;
   
-  s -> next = head;
-  head = s;
-  s -> prev = NULL;
-}
+//   s -> next = head;
+//   head = s;
+//   s -> prev = NULL;
+// }
 
 /** ===========================================================
  * \fn      putSymbolTail
@@ -2267,6 +2267,91 @@ void showCustomSymbol()
  ============================================================== */
 void drawSymbol(struct symbol *symbolPtr)
 {
+/* VARIANT 1 -> every row seperately */
+//   byte cy, mask;
+//   boolean firstPixelFlag = true;
+//   byte currentRow[FONTWIDTH_BIG / NUMBER_OF_PIXELS_PER_BYTE];
+//   byte data = 0;
+  
+//   /* check if symbols has not be drawn yet */
+//   if (!(symbolPtr -> dr))
+//   {
+//     /* run through every row within a symbol */
+//     for (cy = 0; cy < (symbolPtr -> h); cy++)
+//     {
+//       /* check type of symbol and get current interesting row */
+//       if ((symbolPtr -> c) < ASCII_FIRST_CHARACTER_OFFSET)
+//       {
+//         /* 32 bit ASCII number */
+//         memcpy(currentRow, &(numbers[(symbolPtr -> c)][cy][0]), FONTWIDTH_BIG / NUMBER_OF_PIXELS_PER_BYTE);   
+//       }
+//       else if ((symbolPtr -> c) < PICTURE_NAME_OFFSET)
+//       {
+//         /* 16 bit ASCII character */
+//         memcpy(currentRow, &(characters[(symbolPtr -> c) - ASCII_FIRST_CHARACTER_OFFSET][cy][0]), FONTWIDTH_BIG / NUMBER_OF_PIXELS_PER_BYTE);
+//       }
+//       else if ((symbolPtr -> c) == CUSTOM_SYMBOL_NAME_OFFSET)
+//       {
+//         /* customSymbol */
+//         memcpy(currentRow, customSymbol[cy], FONTWIDTH_BIG / NUMBER_OF_PIXELS_PER_BYTE);
+//       }
+//       else
+//       {
+//         /* picture */
+//         memcpy(currentRow, &(pictures[(symbolPtr -> c) - PICTURE_NAME_OFFSET][cy][0]), FONTWIDTH_BIG / NUMBER_OF_PIXELS_PER_BYTE);
+//       }
+
+//       /* set current byte address */
+//       setDisplayAddress((symbolPtr -> x) >> 1, (symbolPtr -> y) + cy);    // '>> 1' corresponds '/2'
+
+//       /* decompress interesting byte and send data bytes */
+//       for (mask = (1 << (NUMBER_OF_PIXELS_PER_BYTE - 1)); mask > 0; mask = mask >> NUMBER_OF_BITS_PER_PIXEL)
+//       //for (mask = 0b10000000; mask > 0; mask = mask >> 1)
+//       { 
+//         /* send a byte every second pixel (defined by the display controller (SSD1329)) */
+//         if (!firstPixelFlag)  // ...second pixel
+//         {
+//           /* check current bit */
+//           if((currentRow[cy] & mask) > 0)
+//           {
+//             /* combine both nibbles */
+//             data |= (symbolPtr -> b);
+//           }
+          
+//           /* send data byte */
+//           writeData(data);
+          
+//           /* reset data byte */
+//           data = 0;
+//         }
+//         else  // ...first pixel
+//         {
+//           /* check current bit */
+//           if((currentRow[cy] & mask) > 0)
+//           {
+//             /* cache first nibble */
+//             data = (symbolPtr -> b) << 4;
+//           }
+//         }
+        
+//         /* toggle first pixel flag */
+//         firstPixelFlag = !firstPixelFlag;
+//       } // ...end of mask-loop
+      
+//       /* reset interesting byte */
+//       currentRow[cy] = 0;
+      
+//     } // ...end of cy-loop
+    
+// //    delay(DRAW_SYMBOL_DELAY);
+
+//     /* symbol has now been drawn */
+//     symbolPtr -> dr = true;
+//   }
+
+
+
+/* VARIANT 2 -> every byte seperately */
   byte interestingByte = 0;
   byte cy, cx, mask;
   boolean firstPixelFlag = true;
@@ -2859,23 +2944,23 @@ static void setDisplayAddress(int x, int y)
  *          (int) y_ = end row (0... 127)
  * \return  -
  ============================================================== */
-/* overload function */
-static void setDisplayAddress(int x, int x_, int y, int y_)
-{
-// #ifdef DEBUGGING
-//   Serial.println("set display address");
-// #endif
+// /* overload function */
+// static void setDisplayAddress(int x, int x_, int y, int y_)
+// {
+// // #ifdef DEBUGGING
+// //   Serial.println("set display address");
+// // #endif
 
-  /* set column address */
-  writeCommand(0x15);
-  writeCommand(x);  // start adr.
-  writeCommand(x_); // end adr.
+//   /* set column address */
+//   writeCommand(0x15);
+//   writeCommand(x);  // start adr.
+//   writeCommand(x_); // end adr.
 
-  /* set row address */
-  writeCommand(0x75);
-  writeCommand(y);  // start adr.
-  writeCommand(y_); // end adr.
-}
+//   /* set row address */
+//   writeCommand(0x75);
+//   writeCommand(y);  // start adr.
+//   writeCommand(y_); // end adr.
+// }
 
 /** ===========================================================
  * \fn      writeCommand
